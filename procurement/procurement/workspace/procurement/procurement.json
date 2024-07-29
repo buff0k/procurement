@@ -1,0 +1,49 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"HJvWuElKEE\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Procurement</span>\",\"col\":12}},{\"id\":\"RJhga48MRk\",\"type\":\"card\",\"data\":{\"card_name\":\"DocTypes\",\"col\":4}}]",
+ "creation": "2024-07-27 20:02:09.921282",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "assets",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Procurement",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "DocTypes",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Purchase Requisition",
+   "link_count": 0,
+   "link_to": "Purchase Requisition",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2024-07-29 15:25:28.554757",
+ "modified_by": "Administrator",
+ "module": "Procurement",
+ "name": "Procurement",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 41.0,
+ "shortcuts": [],
+ "title": "Procurement"
+}
