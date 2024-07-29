@@ -1,0 +1,218 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-07-27 20:03:00.035805",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_lvsj",
+  "amended_from",
+  "letterhead",
+  "company_abbr",
+  "order_from_section",
+  "company",
+  "section_break_xtex",
+  "requested_by",
+  "asset",
+  "plant",
+  "column_break_nzcl",
+  "date",
+  "machine_hours",
+  "component",
+  "section_break_qbca",
+  "description_of_work",
+  "item_list",
+  "subtotal",
+  "vat",
+  "total",
+  "section_break_afgm",
+  "deliver_to",
+  "supplier",
+  "official_company_order_no",
+  "authorized_by",
+  "column_break_opkx",
+  "code",
+  "location"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_lvsj",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Purchase Requisition",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "section_break_xtex",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "letterhead",
+   "fieldtype": "Read Only",
+   "label": "Letterhead"
+  },
+  {
+   "fieldname": "order_from_section",
+   "fieldtype": "Section Break",
+   "label": "Order From"
+  },
+  {
+   "fieldname": "requested_by",
+   "fieldtype": "Link",
+   "label": "Requested By:",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "asset",
+   "fieldtype": "Link",
+   "label": "Plant No",
+   "options": "Asset"
+  },
+  {
+   "fieldname": "plant",
+   "fieldtype": "Data",
+   "label": "Plant Make"
+  },
+  {
+   "fieldname": "column_break_nzcl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "machine_hours",
+   "fieldtype": "Data",
+   "label": "Machine Hours"
+  },
+  {
+   "fieldname": "component",
+   "fieldtype": "Data",
+   "label": "Component"
+  },
+  {
+   "fieldname": "company_abbr",
+   "fieldtype": "Read Only",
+   "label": "Company Abbr"
+  },
+  {
+   "fieldname": "section_break_qbca",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "description_of_work",
+   "fieldtype": "Small Text",
+   "label": "Description of Work"
+  },
+  {
+   "fieldname": "vat",
+   "fieldtype": "Currency",
+   "label": "VAT",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total",
+   "fieldtype": "Currency",
+   "label": "Total",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_afgm",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "deliver_to",
+   "fieldtype": "Data",
+   "label": "Deliver to"
+  },
+  {
+   "fieldname": "supplier",
+   "fieldtype": "Link",
+   "label": "Supplier",
+   "options": "Supplier"
+  },
+  {
+   "fieldname": "official_company_order_no",
+   "fieldtype": "Data",
+   "label": "Official Company Order No"
+  },
+  {
+   "fieldname": "authorized_by",
+   "fieldtype": "Data",
+   "label": "Authorized by"
+  },
+  {
+   "fieldname": "column_break_opkx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "code",
+   "fieldtype": "Data",
+   "label": "Code"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Site",
+   "options": "Location",
+   "reqd": 1
+  },
+  {
+   "columns": 4,
+   "fieldname": "item_list",
+   "fieldtype": "Table",
+   "options": "Purchase Requisition List"
+  },
+  {
+   "fieldname": "subtotal",
+   "fieldtype": "Currency",
+   "label": "Subtotal"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-07-27 20:47:45.914912",
+ "modified_by": "Administrator",
+ "module": "Procurement",
+ "name": "Purchase Requisition",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
