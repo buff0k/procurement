@@ -60,6 +60,7 @@
    "in_list_view": 1,
    "label": "Company",
    "options": "Company",
+   "print_hide": 1,
    "reqd": 1
   },
   {
@@ -71,8 +72,7 @@
   },
   {
    "fieldname": "order_from_section",
-   "fieldtype": "Section Break",
-   "label": "Order From"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "requested_by",
@@ -201,7 +201,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-05 08:47:37.093689",
+ "modified": "2024-08-05 09:00:36.749603",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition",
