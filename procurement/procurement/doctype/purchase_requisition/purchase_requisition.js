@@ -5,7 +5,7 @@ frappe.ui.form.on('Purchase Requisition', {
     company: function(frm) {
         if (frm.doc.company) {
             frappe.db.get_value('Company', frm.doc.company, ['default_letter_head', 'abbr'], (r) => {
-                frm.set_value('letterhead', r.default_letter_head);
+                frm.set_value('letter_head', r.default_letter_head);
                 frm.set_value('company_abbr', r.abbr);
             });
         }

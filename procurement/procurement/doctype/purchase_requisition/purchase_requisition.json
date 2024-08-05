@@ -8,7 +8,7 @@
  "field_order": [
   "section_break_lvsj",
   "amended_from",
-  "letterhead",
+  "letter_head",
   "company_abbr",
   "order_from_section",
   "company",
@@ -62,13 +62,6 @@
    "options": "Company",
    "print_hide": 1,
    "reqd": 1
-  },
-  {
-   "fieldname": "letterhead",
-   "fieldtype": "Read Only",
-   "hidden": 1,
-   "label": "Letterhead",
-   "print_hide": 1
   },
   {
    "fieldname": "order_from_section",
@@ -196,12 +189,19 @@
    "fieldname": "subtotal",
    "fieldtype": "Currency",
    "label": "Subtotal"
+  },
+  {
+   "fieldname": "letter_head",
+   "fieldtype": "Read Only",
+   "hidden": 1,
+   "label": "Letterhead",
+   "print_hide": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-05 09:00:36.749603",
+ "modified": "2024-08-05 09:06:07.095312",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition",
