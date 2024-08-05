@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:{location}{########}",
  "creation": "2024-07-27 20:03:00.035805",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -64,7 +65,9 @@
   {
    "fieldname": "letterhead",
    "fieldtype": "Read Only",
-   "label": "Letterhead"
+   "hidden": 1,
+   "label": "Letterhead",
+   "print_hide": 1
   },
   {
    "fieldname": "order_from_section",
@@ -111,7 +114,9 @@
   {
    "fieldname": "company_abbr",
    "fieldtype": "Read Only",
-   "label": "Company Abbr"
+   "hidden": 1,
+   "label": "Company Abbr",
+   "print_hide": 1
   },
   {
    "fieldname": "section_break_qbca",
@@ -141,6 +146,7 @@
    "fieldtype": "Section Break"
   },
   {
+   "default": "_______________________",
    "fieldname": "deliver_to",
    "fieldtype": "Data",
    "label": "Deliver to"
@@ -152,11 +158,13 @@
    "options": "Supplier"
   },
   {
+   "default": "_______________________",
    "fieldname": "official_company_order_no",
    "fieldtype": "Data",
    "label": "Official Company Order No"
   },
   {
+   "default": "_______________________",
    "fieldname": "authorized_by",
    "fieldtype": "Data",
    "label": "Authorized by"
@@ -166,6 +174,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "default": "__________________",
    "fieldname": "code",
    "fieldtype": "Data",
    "label": "Code"
@@ -178,7 +187,7 @@
    "reqd": 1
   },
   {
-   "columns": 4,
+   "columns": 5,
    "fieldname": "item_list",
    "fieldtype": "Table",
    "options": "Purchase Requisition List"
@@ -192,10 +201,11 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-07-27 20:47:45.914912",
+ "modified": "2024-08-05 08:47:37.093689",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition",
+ "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
@@ -214,5 +224,6 @@
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "track_changes": 1
 }

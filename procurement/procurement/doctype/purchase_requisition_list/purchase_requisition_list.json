@@ -6,6 +6,7 @@
  "engine": "InnoDB",
  "field_order": [
   "qty",
+  "item",
   "description_and_part_no",
   "unit_price",
   "total_cost"
@@ -42,12 +43,19 @@
    "is_virtual": 1,
    "label": "Total Cost",
    "precision": "2"
+  },
+  {
+   "fieldname": "item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Item",
+   "options": "Item"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-07-29 13:55:55.336945",
+ "modified": "2024-08-05 08:13:36.895276",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition List",
