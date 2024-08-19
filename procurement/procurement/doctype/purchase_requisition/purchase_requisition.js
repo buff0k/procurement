@@ -16,11 +16,67 @@ frappe.ui.form.on('Purchase Requisition', {
             calculate_total_cost(frm);
             calculate_totals(frm);
         });
+        frm.trigger('update_employee_names');
     },
 
     validate: function(frm) {
         calculate_totals(frm);
-    }
+    },
+
+    // Trigger the update when the linked fields are changed
+    requested_by: function (frm) {
+        frm.trigger('update_employee_names');
+    },
+    deliver_to: function (frm) {
+        frm.trigger('update_employee_names');
+    },
+    authorized_by: function (frm) {
+        frm.trigger('update_employee_names');
+    },
+
+    update_employee_names: function (frm) {
+        if (frm.doc.requested_by) {
+            frappe.call({
+                method: "frappe.client.get_value",
+                args: {
+                    doctype: "Employee",
+                    filters: { name: frm.doc.requested_by },
+                    fieldname: "employee_name"
+                },
+                callback: function (r) {
+                    frm.set_value("req_name", r.message.employee_name);
+                }
+            });
+        }
+
+        if (frm.doc.deliver_to) {
+            frappe.call({
+                method: "frappe.client.get_value",
+                args: {
+                    doctype: "Employee",
+                    filters: { name: frm.doc.deliver_to },
+                    fieldname: "employee_name"
+                },
+                callback: function (r) {
+                    frm.set_value("del_name", r.message.employee_name);
+                }
+            });
+        }
+
+        if (frm.doc.authorized_by) {
+            frappe.call({
+                method: "frappe.client.get_value",
+                args: {
+                    doctype: "Employee",
+                    filters: { name: frm.doc.authorized_by },
+                    fieldname: "employee_name"
+                },
+                callback: function (r) {
+                    frm.set_value("auth_name", r.message.employee_name);
+                }
+            });
+        }
+    } 
 });
 
 frappe.ui.form.on('Purchase Requisition List', {

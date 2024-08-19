@@ -11,10 +11,13 @@
   "company_abbr",
   "order_from_section",
   "company",
-  "section_break_xtex",
   "requested_by",
+  "column_break_kdgu",
+  "deliver_to",
+  "section_break_xtex",
+  "req_name",
+  "plant_make",
   "asset",
-  "plant",
   "column_break_nzcl",
   "date",
   "machine_hours",
@@ -26,13 +29,14 @@
   "vat",
   "total",
   "section_break_afgm",
-  "deliver_to",
+  "del_name",
   "supplier",
   "official_company_order_no",
-  "authorized_by",
+  "auth_name",
   "column_break_opkx",
   "code",
-  "location"
+  "location",
+  "authorized_by"
  ],
  "fields": [
   {
@@ -64,25 +68,23 @@
   },
   {
    "fieldname": "order_from_section",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "User Fields",
+   "print_hide": 1
   },
   {
    "fieldname": "requested_by",
    "fieldtype": "Link",
    "label": "Requested By:",
-   "options": "User",
+   "options": "Employee",
+   "print_hide": 1,
    "reqd": 1
   },
   {
    "fieldname": "asset",
    "fieldtype": "Link",
-   "label": "Plant No",
+   "label": "Plant No:",
    "options": "Asset"
-  },
-  {
-   "fieldname": "plant",
-   "fieldtype": "Data",
-   "label": "Plant Make"
   },
   {
    "fieldname": "column_break_nzcl",
@@ -91,17 +93,17 @@
   {
    "fieldname": "date",
    "fieldtype": "Date",
-   "label": "Date"
+   "label": "Date:"
   },
   {
    "fieldname": "machine_hours",
    "fieldtype": "Data",
-   "label": "Machine Hours"
+   "label": "Machine Hours:"
   },
   {
    "fieldname": "component",
    "fieldtype": "Data",
-   "label": "Component"
+   "label": "Component:"
   },
   {
    "fieldname": "company_abbr",
@@ -138,10 +140,12 @@
    "fieldtype": "Section Break"
   },
   {
-   "default": "_______________________",
    "fieldname": "deliver_to",
-   "fieldtype": "Data",
-   "label": "Deliver to"
+   "fieldtype": "Link",
+   "label": "Deliver to",
+   "options": "Employee",
+   "print_hide": 1,
+   "reqd": 1
   },
   {
    "fieldname": "supplier",
@@ -156,10 +160,11 @@
    "label": "Official Company Order No"
   },
   {
-   "default": "_______________________",
    "fieldname": "authorized_by",
-   "fieldtype": "Data",
-   "label": "Authorized by"
+   "fieldtype": "Link",
+   "label": "Authorized By:",
+   "options": "Employee",
+   "print_hide": 1
   },
   {
    "fieldname": "column_break_opkx",
@@ -196,12 +201,36 @@
    "hidden": 1,
    "label": "Letterhead",
    "print_hide": 1
+  },
+  {
+   "fieldname": "column_break_kdgu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "req_name",
+   "fieldtype": "Read Only",
+   "label": "Requested By:"
+  },
+  {
+   "fieldname": "plant_make",
+   "fieldtype": "Data",
+   "label": "Plant Make:"
+  },
+  {
+   "fieldname": "del_name",
+   "fieldtype": "Read Only",
+   "label": "Deliver to"
+  },
+  {
+   "fieldname": "auth_name",
+   "fieldtype": "Read Only",
+   "label": "Authorized By:"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-19 15:20:42.721920",
+ "modified": "2024-08-19 15:47:55.948271",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition",
