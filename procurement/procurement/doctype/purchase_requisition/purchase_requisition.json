@@ -1,7 +1,6 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{location}{########}",
  "creation": "2024-07-27 20:03:00.035805",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -167,10 +166,11 @@
    "fieldtype": "Column Break"
   },
   {
-   "default": "__________________",
    "fieldname": "code",
-   "fieldtype": "Data",
-   "label": "Code"
+   "fieldtype": "Link",
+   "label": "Code",
+   "options": "Cost Center",
+   "reqd": 1
   },
   {
    "fieldname": "location",
@@ -201,11 +201,10 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-05 09:06:07.095312",
+ "modified": "2024-08-19 11:56:27.266314",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition",
- "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
@@ -220,10 +219,38 @@
    "share": 1,
    "submit": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Procurement Admin",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Procurement User",
+   "select": 1,
+   "share": 1,
+   "write": 1
   }
  ],
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
- "track_changes": 1
+ "track_changes": 1,
+ "track_seen": 1,
+ "track_views": 1
 }

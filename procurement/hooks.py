@@ -4,6 +4,25 @@ app_publisher = "Isambane Mining (Pty) Ltd"
 app_description = "Isambane Mining Procurement Migration Suite"
 app_email = "eben@isambane.co.za"
 app_license = "mit"
+required_apps = ["frappe/erpnext"]
+fixtures = [
+        {"dt": "Role", "filters": [
+            [
+            "name", "in", [
+                    "Procurement Admin",
+                    "Procurement User"
+    		       ]
+                ]
+            ]}, 
+        {"dt": "Custom DocPerm", "filters": [
+            [
+            "role", "in", [
+                    "Procurement Admin",
+                    "Procurement User"
+    		       ]
+                ]
+            ]}
+        ]
 # required_apps = []
 
 # Includes in <head>
