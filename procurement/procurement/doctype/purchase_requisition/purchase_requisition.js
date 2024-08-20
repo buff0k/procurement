@@ -8,6 +8,23 @@ frappe.ui.form.on('Purchase Requisition', {
                 frm.set_value('letter_head', r.default_letter_head);
                 frm.set_value('company_abbr', r.abbr);
             });
+            // Apply filter on the "code" field linked to "Account" DocType
+            frm.set_query('code', function() {
+                return {
+                    filters: {
+                        company: frm.doc.company
+                    }
+                };
+            });
+
+            // Apply filter on the "location" field linked to "Cost Center" DocType
+            frm.set_query('location', function() {
+                return {
+                    filters: {
+                        company: frm.doc.company
+                    }
+                };
+            });
         }
     },
 
