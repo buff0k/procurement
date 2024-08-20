@@ -3,7 +3,8 @@
 
 import frappe
 from frappe.model.document import Document
-
+from frappe.model.mapper import get_mapped_doc
+from frappe.utils import add_days, today
 
 class PurchaseRequisition(Document):
 	pass
@@ -27,3 +28,42 @@ def update_employee_names(doc, method):
 @frappe.whitelist()
 def on_update(doc, method):
     update_employee_names(doc, method)
+
+@frappe.whitelist()
+def make_purchase_order(source_name, target_doc=None):
+    def set_missing_values(source, target):
+        # Set any additional fields that don't directly map
+        target.cost_center = source.location  # Assuming 'location' maps to 'cost_center'
+        
+        # Calculate the schedule date to be one week in the future
+        schedule_date = add_days(today(), 7)
+        
+        # Default UOM (assuming "Nos" exists in UOM DocType)
+        default_uom = frappe.db.get_value('UOM', {'uom_name': 'Nos'}, 'name')
+        
+        for item in target.items:
+            item.schedule_date = schedule_date
+            item.uom = default_uom
+
+    # Map fields from Purchase Requisition to Purchase Order
+    doclist = get_mapped_doc("Purchase Requisition", source_name, {
+        "Purchase Requisition": {
+            "doctype": "Purchase Order",
+            "field_map": {
+                "name": "purchase_requisition",  # Link the Purchase Requisition to the Purchase Order
+                "company": "company",
+                "supplier": "supplier"
+            }
+        },
+        "Purchase Requisition List": {
+            "doctype": "Purchase Order Item",
+            "field_map": {
+                "item": "item_code",
+                "qty": "qty",
+                "unit_price": "rate"
+            },
+            "condition": lambda doc: doc.item  # Skip rows where item is not set
+        }
+    }, target_doc, set_missing_values)
+
+    return doclist

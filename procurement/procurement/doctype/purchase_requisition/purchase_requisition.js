@@ -17,6 +17,14 @@ frappe.ui.form.on('Purchase Requisition', {
             calculate_totals(frm);
         });
         frm.trigger('update_employee_names');
+        if (frappe.user.has_role('Procurement Admin')) {
+            frm.add_custom_button(__('Create Purchase Order'), function() {
+                frappe.model.open_mapped_doc({
+                    method: 'procurement.procurement.doctype.purchase_requisition.purchase_requisition.make_purchase_order',
+                    frm: frm
+                });
+            });
+        }
     },
 
     validate: function(frm) {

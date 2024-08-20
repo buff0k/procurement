@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:{company_abbr}{######}",
  "creation": "2024-07-27 20:03:00.035805",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -14,6 +15,7 @@
   "requested_by",
   "column_break_kdgu",
   "deliver_to",
+  "authorized_by",
   "section_break_xtex",
   "req_name",
   "plant_make",
@@ -35,8 +37,7 @@
   "auth_name",
   "column_break_opkx",
   "code",
-  "location",
-  "authorized_by"
+  "location"
  ],
  "fields": [
   {
@@ -154,10 +155,12 @@
    "options": "Supplier"
   },
   {
-   "default": "_______________________",
    "fieldname": "official_company_order_no",
-   "fieldtype": "Data",
-   "label": "Official Company Order No"
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Official Company Order No",
+   "options": "Purchase Order",
+   "unique": 1
   },
   {
    "fieldname": "authorized_by",
@@ -180,6 +183,7 @@
   {
    "fieldname": "location",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Site",
    "options": "Cost Center",
    "reqd": 1
@@ -222,6 +226,7 @@
    "label": "Deliver to"
   },
   {
+   "default": "_______________________",
    "fieldname": "auth_name",
    "fieldtype": "Read Only",
    "label": "Authorized By:"
@@ -230,10 +235,11 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-19 15:47:55.948271",
+ "modified": "2024-08-20 11:36:21.004840",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
