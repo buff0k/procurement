@@ -16,46 +16,66 @@
    "default": "1",
    "fieldname": "qty",
    "fieldtype": "Int",
+   "in_filter": 1,
    "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Qty",
    "non_negative": 1,
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "fieldname": "description_and_part_no",
    "fieldtype": "Data",
+   "in_filter": 1,
    "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Description and Part No.",
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "fieldname": "unit_price",
    "fieldtype": "Currency",
+   "in_filter": 1,
    "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Unit Price",
    "precision": "2",
-   "reqd": 1
+   "reqd": 1,
+   "search_index": 1
   },
   {
    "fieldname": "total_cost",
    "fieldtype": "Currency",
+   "in_filter": 1,
    "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "is_virtual": 1,
    "label": "Total Cost",
-   "precision": "2"
+   "precision": "2",
+   "search_index": 1
   },
   {
    "fieldname": "item",
    "fieldtype": "Link",
+   "in_filter": 1,
    "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
    "label": "Item",
-   "options": "Item"
+   "options": "Item",
+   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-08-05 08:13:36.895276",
+ "modified": "2024-08-26 07:02:14.619358",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition List",
