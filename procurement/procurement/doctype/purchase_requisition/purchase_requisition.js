@@ -35,12 +35,20 @@ frappe.ui.form.on('Purchase Requisition', {
         });
         frm.trigger('update_employee_names');
         if (frappe.user.has_role('Procurement Admin')) {
+            frm.set_df_property('official_company_order_no', 'read_only', 0);
+            frm.set_df_property('code', 'read_only', 0);
+            frm.set_df_property('location', 'read_only', 0);
             frm.add_custom_button(__('Create Purchase Order'), function() {
                 frappe.model.open_mapped_doc({
                     method: 'procurement.procurement.doctype.purchase_requisition.purchase_requisition.make_purchase_order',
                     frm: frm
                 });
             });
+        } else {
+            // Set fields to read-only for all other roles
+            frm.set_df_property('official_company_order_no', 'read_only', 1);
+            frm.set_df_property('code', 'read_only', 1);
+            frm.set_df_property('location', 'read_only', 1);
         }
     },
 

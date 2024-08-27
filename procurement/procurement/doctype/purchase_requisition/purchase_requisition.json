@@ -37,7 +37,8 @@
   "auth_name",
   "column_break_opkx",
   "code",
-  "location"
+  "location",
+  "buyer"
  ],
  "fields": [
   {
@@ -177,16 +178,14 @@
    "fieldname": "code",
    "fieldtype": "Link",
    "label": "Code",
-   "options": "Account",
-   "reqd": 1
+   "options": "Account"
   },
   {
    "fieldname": "location",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Site",
-   "options": "Cost Center",
-   "reqd": 1
+   "options": "Cost Center"
   },
   {
    "columns": 5,
@@ -230,12 +229,19 @@
    "fieldname": "auth_name",
    "fieldtype": "Read Only",
    "label": "Authorized By:"
+  },
+  {
+   "fieldname": "buyer",
+   "fieldtype": "Link",
+   "label": "Buyer",
+   "link_filters": "[]",
+   "options": "User"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-08-20 11:36:21.004840",
+ "modified": "2024-08-27 20:26:45.883398",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition",
