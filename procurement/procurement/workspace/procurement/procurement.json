@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"HJvWuElKEE\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Procurement</span>\",\"col\":12}},{\"id\":\"RJhga48MRk\",\"type\":\"card\",\"data\":{\"card_name\":\"Ordering\",\"col\":4}},{\"id\":\"e5h0ObKIdm\",\"type\":\"card\",\"data\":{\"card_name\":\"Maintenance\",\"col\":4}}]",
+ "content": "[{\"id\":\"HJvWuElKEE\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Procurement</span>\",\"col\":12}},{\"id\":\"RJhga48MRk\",\"type\":\"card\",\"data\":{\"card_name\":\"Ordering\",\"col\":4}},{\"id\":\"e5h0ObKIdm\",\"type\":\"card\",\"data\":{\"card_name\":\"Maintenance\",\"col\":4}},{\"id\":\"wzEUYZV0P3\",\"type\":\"card\",\"data\":{\"card_name\":\"ESD Procurement\",\"col\":4}}]",
  "creation": "2024-07-27 20:02:09.921282",
  "custom_blocks": [],
  "docstatus": 0,
@@ -80,9 +80,38 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "ESD Procurement",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Local Suppliers",
+   "link_count": 0,
+   "link_to": "Local Suppliers",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Request for Quotation",
+   "link_count": 0,
+   "link_to": "Request for Quotation",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2024-08-20 12:40:06.000469",
+ "modified": "2024-10-08 10:10:41.905079",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Procurement",

@@ -21,7 +21,12 @@ fixtures = [
                     "Procurement User"
     		       ]
                 ]
-            ]}
+            ]},
+        {"doctype": "Client Script", "filters": [
+            [
+            "module" , "in" , ("Procurement" )
+                ]
+        ]}
         ]
 # required_apps = []
 
