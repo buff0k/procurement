@@ -2,42 +2,41 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Purchase Requisition', {
-   if (frm.doc.company) {
-            // Fetch default_letter_head from the Company DocType
-            frappe.db.get_value('Company', frm.doc.company, 'default_letter_head', (r) => {
-                frm.set_value('letter_head', r.default_letter_head);
-            });
-
-            // Fetch company_abbr from the Company Abbreviations DocType
-            frappe.db.get_value('Company Abbreviations', { company: frm.doc.company }, 'company_abbr', (r) => {
-                if (r) {
-                    frm.set_value('company_abbr', r.company_abbr);
-                } else {
-                    frm.set_value('company_abbr', null); // Clear the field if no match is found
+   onload: function (frm) {
+        // Set the default company on load
+        if (!frm.doc.company) {
+            frappe.call({
+                method: "frappe.client.get_value",
+                args: {
+                    doctype: "Global Defaults",
+                    fieldname: "default_company",
+                },
+                callback: function (r) {
+                    if (r.message && r.message.default_company) {
+                        frm.set_value("company", r.message.default_company);
+                    }
                 }
             });
+        }
+    },
 
-            // Apply filter on the "code" field linked to the "Account" DocType
-            frm.set_query('code', function () {
-                return {
-                    filters: {
-                        company: frm.doc.company
+    company: function (frm) {
+        if (frm.doc.company) {
+            // Call server script to fetch company details
+            frappe.call({
+                method: "procurement.procurement.doctype.purchase_requisition.purchase_requisition.get_company_details",
+                args: { company: frm.doc.company },
+                callback: function (r) {
+                    if (r.message) {
+                        frm.set_value("letter_head", r.message.default_letter_head);
+                        frm.set_value("company_abbr", r.message.company_abbr);
                     }
-                };
-            });
-
-            // Apply filter on the "location" field linked to the "Cost Center" DocType
-            frm.set_query('location', function () {
-                return {
-                    filters: {
-                        company: frm.doc.company
-                    }
-                };
+                }
             });
         } else {
-            // Clear letter_head and company_abbr if company field is empty
-            frm.set_value('letter_head', null);
-            frm.set_value('company_abbr', null);
+            // Clear fields if company is unset
+            frm.set_value("letter_head", null);
+            frm.set_value("company_abbr", null);
         }
     },
 
@@ -122,7 +121,22 @@ frappe.ui.form.on('Purchase Requisition', {
                 }
             });
         }
-    } 
+    },
+
+    site_code: function (frm) {
+        if (frm.doc.site_code) {
+            // Fetch the location from the linked Site Code document
+            frappe.db.get_value('Site Code', frm.doc.site_code, 'location', (r) => {
+                if (r && r.location) {
+                    // Set the location field in the Purchase Requisition document
+                    frm.set_value('location', r.location);
+                }
+            });
+        } else {
+            // Clear the location field if site_code is not set
+            frm.set_value('location', null);
+        }
+    }
 });
 
 frappe.ui.form.on('Purchase Requisition List', {

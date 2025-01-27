@@ -10,6 +10,33 @@ class PurchaseRequisition(Document):
 	pass
 
 @frappe.whitelist()
+def get_company_details(company=None):
+    """Fetches default_letter_head and company_abbr based on the selected company."""
+    if not company:
+        # Fetch the default company from Global Defaults
+        company = frappe.db.get_single_value("Global Defaults", "default_company")
+        if not company:
+            frappe.throw("Default company is not set in Global Defaults.")
+
+    # Get the default_letter_head from the Company DocType
+    default_letter_head = frappe.db.get_value("Company", company, "default_letter_head")
+
+    # Get the company_abbr (document name is the same as the value of company_abbr)
+    company_abbr = frappe.db.get_value(
+        "Company Abbreviations",
+        {"company": company},
+        "company_abbr"
+    )
+
+    if not company_abbr:
+        frappe.throw(f"No abbreviation found for the company: {company}")
+
+    return {
+        "default_letter_head": default_letter_head,
+        "company_abbr": company_abbr,  # This is the document name as well
+    }
+
+@frappe.whitelist()
 def update_employee_names(doc, method):
     # Helper function to get employee name from Employee DocType
     def get_employee_name(employee_id):
@@ -32,8 +59,8 @@ def on_update(doc, method):
 @frappe.whitelist()
 def make_purchase_order(source_name, target_doc=None):
     def set_missing_values(source, target):
-        # Set any additional fields that don't directly map
-        target.cost_center = source.cost_center  # Assuming 'location' maps to 'cost_center'
+        # Set additional fields
+        target.cost_center = source.account  # Assuming 'account' maps to 'cost_center'
         
         # Calculate the schedule date to be one week in the future
         schedule_date = add_days(today(), 7)
@@ -46,24 +73,42 @@ def make_purchase_order(source_name, target_doc=None):
             item.uom = default_uom
 
     # Map fields from Purchase Requisition to Purchase Order
-    doclist = get_mapped_doc("Purchase Requisition", source_name, {
-        "Purchase Requisition": {
-            "doctype": "Purchase Order",
-            "field_map": {
-                "name": "purchase_requisition",  # Link the Purchase Requisition to the Purchase Order
-                "company": "company",
-                "supplier": "supplier"
+    doclist = get_mapped_doc(
+        "Purchase Requisition",
+        source_name,
+        {
+            "Purchase Requisition": {
+                "doctype": "Purchase Order",
+                "field_map": {
+                    "name": "purchase_requisition",  # Link the Purchase Requisition to the Purchase Order
+                    "company": "company",
+                    "supplier": "supplier"
+                }
+            },
+            "Purchase Requisition List": {
+                "doctype": "Purchase Order Item",
+                "field_map": {
+                    "item": "item_code",
+                    "qty": "qty",
+                    "unit_price": "rate"
+                },
+                "condition": lambda doc: doc.item  # Skip rows where item is not set
             }
         },
-        "Purchase Requisition List": {
-            "doctype": "Purchase Order Item",
-            "field_map": {
-                "item": "item_code",
-                "qty": "qty",
-                "unit_price": "rate"
-            },
-            "condition": lambda doc: doc.item  # Skip rows where item is not set
-        }
-    }, target_doc, set_missing_values)
+        target_doc,
+        set_missing_values
+    )
+
+    # Explicitly set the name of the Purchase Order
+    purchase_order_name = source_name
+
+    # Check if a Purchase Order with the same name already exists
+    if frappe.db.exists("Purchase Order", purchase_order_name):
+        frappe.throw(_("A Purchase Order with the name {0} already exists").format(purchase_order_name))
+
+    # Bypass the naming series and insert the document with the specified name
+    doclist.name = purchase_order_name
+    doclist.flags.ignore_permissions = True  # Ensure permissions don't block the save
+    doclist.insert(ignore_permissions=True)  # Insert the document directly into the database
 
     return doclist

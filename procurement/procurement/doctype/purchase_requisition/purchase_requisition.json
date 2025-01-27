@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{company_abbr}{######}",
+ "autoname": "format:{YY}{company_abbr}{#####}.{location}",
  "creation": "2024-07-27 20:03:00.035805",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -10,7 +10,7 @@
   "amended_from",
   "letter_head",
   "company_abbr",
-  "cost_center",
+  "location",
   "order_from_section",
   "company",
   "requested_by",
@@ -37,8 +37,8 @@
   "official_company_order_no",
   "auth_name",
   "column_break_opkx",
-  "code",
-  "location",
+  "account",
+  "site_code",
   "buyer"
  ],
  "fields": [
@@ -100,8 +100,10 @@
   },
   {
    "fieldname": "machine_hours",
-   "fieldtype": "Data",
-   "label": "Machine Hours:"
+   "fieldtype": "Float",
+   "label": "Machine Hours:",
+   "non_negative": 1,
+   "precision": "2"
   },
   {
    "fieldname": "component",
@@ -178,19 +180,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "code",
-   "fieldtype": "Link",
-   "label": "Code",
-   "options": "Account"
-  },
-  {
-   "fieldname": "location",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Site",
-   "options": "Site Code"
-  },
-  {
    "columns": 5,
    "fieldname": "item_list",
    "fieldtype": "Table",
@@ -221,8 +210,9 @@
   },
   {
    "fieldname": "plant_make",
-   "fieldtype": "Data",
-   "label": "Plant Make:"
+   "fieldtype": "Link",
+   "label": "Plant Make:",
+   "options": "Brand"
   },
   {
    "fieldname": "del_name",
@@ -243,18 +233,30 @@
    "options": "User"
   },
   {
-   "fieldname": "cost_center",
+   "fieldname": "account",
    "fieldtype": "Link",
-   "label": "Cost Center",
-   "options": "Cost Center",
-   "read_only": 1,
+   "label": "Code",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "site_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Site",
+   "options": "Site Code"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location",
+   "options": "Location",
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-27 10:15:05.267949",
+ "modified": "2025-01-27 11:33:32.739649",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition",

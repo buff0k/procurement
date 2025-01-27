@@ -5,31 +5,41 @@ app_description = "Isambane Mining Procurement Migration Suite"
 app_email = "eben@isambane.co.za"
 app_license = "mit"
 required_apps = ["frappe/erpnext"]
+source_link = "http://github.com/buff0k/procurement"
+app_logo_url = "/assets/procurement/images/is-logo.svg"
+app_home = "/app/procurement"
+add_to_apps_screen = [
+	{
+		"name": "procurement",
+		"logo": "/assets/procurement/images/is-logo.svg",
+		"title": "Procurement",
+		"route": "/app/procurement",
+		"has_permission": "procurement.procurement.utils.check_app_permission",
+	}
+]
 fixtures = [
-        {"dt": "Role", "filters": [
-            [
-            "name", "in", [
-                    "Procurement Admin",
-                    "Procurement User"
-    		       ]
-                ]
-            ]}, 
-        {"dt": "Custom DocPerm", "filters": [
-            [
-            "role", "in", [
-                    "Procurement Admin",
-                    "Procurement User"
-    		       ]
-                ]
-            ]},
-        {"doctype": "Client Script", "filters": [
-            [
-            "module" , "in" , ("Procurement" )
-                ]
-        ]}
-        ]
-# required_apps = []
-
+	{"dt": "Role", "filters": [
+		[
+			"name", "in", [
+				"Procurement Admin",
+				"Procurement User"
+			]
+		]
+	]}, 
+	{"dt": "Custom DocPerm", "filters": [
+		[
+			"role", "in", [
+				"Procurement Admin",
+				"Procurement User"
+			]
+		]
+	]},
+	{"doctype": "Client Script", "filters": [
+		[
+			"module" , "in" , ("Procurement" )
+		]
+	]}
+]
 # Includes in <head>
 # ------------------
 

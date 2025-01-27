@@ -1,0 +1,40 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-01-27 13:33:41.010736",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "file_desc",
+  "file_att"
+ ],
+ "fields": [
+  {
+   "fieldname": "file_desc",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "File Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "file_att",
+   "fieldtype": "Attach",
+   "in_list_view": 1,
+   "label": "Attach File",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-01-27 13:34:48.819042",
+ "modified_by": "Administrator",
+ "module": "Procurement",
+ "name": "PR Multi-Attach",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
