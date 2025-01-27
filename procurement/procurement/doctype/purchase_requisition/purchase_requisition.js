@@ -2,14 +2,23 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Purchase Requisition', {
-    company: function(frm) {
-        if (frm.doc.company) {
-            frappe.db.get_value('Company', frm.doc.company, ['default_letter_head', 'abbr'], (r) => {
+   if (frm.doc.company) {
+            // Fetch default_letter_head from the Company DocType
+            frappe.db.get_value('Company', frm.doc.company, 'default_letter_head', (r) => {
                 frm.set_value('letter_head', r.default_letter_head);
-                frm.set_value('company_abbr', r.abbr);
             });
-            // Apply filter on the "code" field linked to "Account" DocType
-            frm.set_query('code', function() {
+
+            // Fetch company_abbr from the Company Abbreviations DocType
+            frappe.db.get_value('Company Abbreviations', { company: frm.doc.company }, 'company_abbr', (r) => {
+                if (r) {
+                    frm.set_value('company_abbr', r.company_abbr);
+                } else {
+                    frm.set_value('company_abbr', null); // Clear the field if no match is found
+                }
+            });
+
+            // Apply filter on the "code" field linked to the "Account" DocType
+            frm.set_query('code', function () {
                 return {
                     filters: {
                         company: frm.doc.company
@@ -17,14 +26,18 @@ frappe.ui.form.on('Purchase Requisition', {
                 };
             });
 
-            // Apply filter on the "location" field linked to "Cost Center" DocType
-            frm.set_query('location', function() {
+            // Apply filter on the "location" field linked to the "Cost Center" DocType
+            frm.set_query('location', function () {
                 return {
                     filters: {
                         company: frm.doc.company
                     }
                 };
             });
+        } else {
+            // Clear letter_head and company_abbr if company field is empty
+            frm.set_value('letter_head', null);
+            frm.set_value('company_abbr', null);
         }
     },
 

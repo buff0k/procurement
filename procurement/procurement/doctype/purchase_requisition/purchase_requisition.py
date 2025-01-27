@@ -33,7 +33,7 @@ def on_update(doc, method):
 def make_purchase_order(source_name, target_doc=None):
     def set_missing_values(source, target):
         # Set any additional fields that don't directly map
-        target.cost_center = source.location  # Assuming 'location' maps to 'cost_center'
+        target.cost_center = source.cost_center  # Assuming 'location' maps to 'cost_center'
         
         # Calculate the schedule date to be one week in the future
         schedule_date = add_days(today(), 7)

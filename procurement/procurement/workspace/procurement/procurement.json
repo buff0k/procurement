@@ -45,8 +45,37 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "ESD Procurement",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Local Suppliers",
+   "link_count": 0,
+   "link_to": "Local Suppliers",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Request for Quotation",
+   "link_count": 0,
+   "link_to": "Request for Quotation",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Maintenance",
-   "link_count": 3,
+   "link_count": 5,
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -84,18 +113,9 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "ESD Procurement",
-   "link_count": 2,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Local Suppliers",
+   "label": "Site Code",
    "link_count": 0,
-   "link_to": "Local Suppliers",
+   "link_to": "Site Code",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -103,15 +123,15 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Request for Quotation",
+   "label": "Company Abbreviations",
    "link_count": 0,
-   "link_to": "Request for Quotation",
+   "link_to": "Company Abbreviations",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
   }
  ],
- "modified": "2024-10-08 10:10:41.905079",
+ "modified": "2025-01-27 09:54:28.912671",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Procurement",
