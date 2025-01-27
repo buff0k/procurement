@@ -18,27 +18,8 @@ add_to_apps_screen = [
 	}
 ]
 fixtures = [
-	{"dt": "Role", "filters": [
-		[
-			"name", "in", [
-				"Procurement Admin",
-				"Procurement User"
-			]
-		]
-	]}, 
-	{"dt": "Custom DocPerm", "filters": [
-		[
-			"role", "in", [
-				"Procurement Admin",
-				"Procurement User"
-			]
-		]
-	]},
-	{"doctype": "Client Script", "filters": [
-		[
-			"module" , "in" , ("Procurement" )
-		]
-	]}
+	{"dt": "Role", "filters": [["name", "in", ["Procurement Admin",	"Procurement User"]]]}, 
+	{"dt": "Custom DocPerm", "filters": [["role", "in", ["Procurement Admin", "Procurement User"]]]},
 ]
 # Includes in <head>
 # ------------------
