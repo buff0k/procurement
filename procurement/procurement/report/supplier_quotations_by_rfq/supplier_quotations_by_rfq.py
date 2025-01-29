@@ -19,10 +19,13 @@ def execute(filters=None):
 def get_columns(filters):
     """Define table columns dynamically based on RFQ items."""
 
-    # First column: Supplier Quotation Link
+    # Supplier-related columns
     columns = [
         {"fieldname": "supplier_quotation", "label": "Supplier Quotation", "fieldtype": "Link", "options": "Supplier Quotation", "width": 150},
-        {"fieldname": "supplier_name", "label": "Supplier", "fieldtype": "Link", "options": "Supplier", "width": 150}
+        {"fieldname": "supplier_name", "label": "Supplier", "fieldtype": "Link", "options": "Supplier", "width": 150},
+        {"fieldname": "supplier_primary_address", "label": "Supplier Address", "fieldtype": "Data", "width": 200},
+        {"fieldname": "mobile_no", "label": "Supplier Contact No.", "fieldtype": "Data", "width": 150},
+        {"fieldname": "email_id", "label": "Supplier Email Address", "fieldtype": "Data", "width": 200},
     ]
 
     # Fetch unique items for the given RFQ
@@ -41,6 +44,9 @@ def get_columns(filters):
             {"fieldname": f"{item}_price", "label": f"{item} Price per Unit", "fieldtype": "Currency", "width": 120},
             {"fieldname": f"{item}_total", "label": f"{item} Total Price", "fieldtype": "Currency", "width": 120},
         ])
+
+    # Add the final total column
+    columns.append({"fieldname": "total_amount", "label": "Total", "fieldtype": "Currency", "width": 150})
 
     return columns
 
@@ -61,15 +67,33 @@ def get_data(filters):
         supplier_quotation = item["parent"]
         supplier_name = frappe.get_value("Supplier Quotation", supplier_quotation, "supplier")
 
+        # Fetch additional supplier details
+        supplier_details = frappe.get_value(
+            "Supplier",
+            supplier_name,
+            ["supplier_primary_address", "mobile_no", "email_id"],
+            as_dict=True
+        )
+
         # If supplier not already in the map, initialize their data
         if supplier_name not in supplier_map:
-            supplier_map[supplier_name] = {"supplier_quotation": supplier_quotation, "supplier_name": supplier_name}
+            supplier_map[supplier_name] = {
+                "supplier_quotation": supplier_quotation,
+                "supplier_name": supplier_name,
+                "supplier_primary_address": supplier_details.get("supplier_primary_address"),
+                "mobile_no": supplier_details.get("mobile_no"),
+                "email_id": supplier_details.get("email_id"),
+                "total_amount": 0  # Initialize total amount
+            }
 
         # Add item-specific details
         supplier_map[supplier_name][f"{item['item_code']}_uom"] = item["uom"]
         supplier_map[supplier_name][f"{item['item_code']}_qty"] = item["qty"]
         supplier_map[supplier_name][f"{item['item_code']}_price"] = item["rate"]
         supplier_map[supplier_name][f"{item['item_code']}_total"] = item["amount"]
+
+        # Sum total price for all items
+        supplier_map[supplier_name]["total_amount"] += item["amount"]
 
     # Convert dictionary to list format for the report
     data = list(supplier_map.values())
