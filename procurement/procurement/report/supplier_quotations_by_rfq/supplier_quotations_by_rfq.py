@@ -61,7 +61,7 @@ def get_columns(filters):
     return columns
 
 def get_data(filters):
-    """Fetch supplier quotations for the given RFQ and restructure them into columns."""
+    """Fetch supplier quotations for the given RFQ and add missing suppliers as blank rows."""
 
     # Step 1: Get all Supplier Quotations linked via items
     supplier_quotation_ids = frappe.get_all(
@@ -85,10 +85,19 @@ def get_data(filters):
         fields=["parent", "item_code", "qty", "rate", "amount", "uom"]
     )
 
+    # Step 4: Get all suppliers invited in the RFQ
+    invited_suppliers = frappe.get_all(
+        "Request for Quotation Supplier",
+        filters={"parent": filters.get("request_for_quotation")},
+        pluck="supplier"
+    )
+
     # Dictionary to store supplier data
     supplier_map = {}
 
-    # Step 4: Initialize all suppliers first
+    # Step 5: Initialize suppliers with submitted Supplier Quotations
+    submitted_suppliers = set()
+    
     for sq in supplier_quotations:
         supplier_details = frappe.get_value(
             "Supplier",
@@ -107,7 +116,9 @@ def get_data(filters):
             "terms": strip_html_tags(sq.terms) if sq.terms else ""
         }
 
-    # Step 5: Populate item data
+        submitted_suppliers.add(sq.supplier)  # Track submitted suppliers
+
+    # Step 6: Populate item data
     for item in sq_items:
         if item["parent"] in supplier_map:
             supplier_map[item["parent"]][f"{item['item_code']}_uom"] = item["uom"]
@@ -116,7 +127,27 @@ def get_data(filters):
             supplier_map[item["parent"]][f"{item['item_code']}_total"] = item["amount"]
             supplier_map[item["parent"]]["total_amount"] += item["amount"]
 
-    # Step 6: Convert dictionary to list format for the report
+    # Step 7: Identify missing suppliers and add blank rows
+    for supplier in invited_suppliers:
+        if supplier not in submitted_suppliers:  # Supplier did not submit a quotation
+            supplier_details = frappe.get_value(
+                "Supplier",
+                supplier,
+                ["supplier_primary_address", "mobile_no", "email_id"],
+                as_dict=True
+            )
+
+            supplier_map[f"missing_{supplier}"] = {
+                "supplier_quotation": "",  # No quotation
+                "supplier_name": supplier,
+                "supplier_primary_address": supplier_details.get("supplier_primary_address"),
+                "mobile_no": supplier_details.get("mobile_no"),
+                "email_id": supplier_details.get("email_id"),
+                "total_amount": 0,
+                "terms": ""  # No terms
+            }
+
+    # Step 8: Convert dictionary to list format for the report
     data = list(supplier_map.values())
 
     return data
