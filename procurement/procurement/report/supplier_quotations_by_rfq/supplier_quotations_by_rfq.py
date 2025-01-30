@@ -63,54 +63,60 @@ def get_columns(filters):
 def get_data(filters):
     """Fetch supplier quotations for the given RFQ and restructure them into columns."""
 
-    # Fetch all supplier quotation items for the RFQ
-    sq_items = frappe.get_all(
+    # Step 1: Get all Supplier Quotations linked via items
+    supplier_quotation_ids = frappe.get_all(
         "Supplier Quotation Item",
         filters={"request_for_quotation": filters.get("request_for_quotation")},
+        distinct=True,
+        pluck="parent"
+    )
+
+    # Step 2: Fetch Supplier Quotation data
+    supplier_quotations = frappe.get_all(
+        "Supplier Quotation",
+        filters={"name": ["in", supplier_quotation_ids]},
+        fields=["name", "supplier", "terms"]
+    )
+
+    # Step 3: Fetch all Supplier Quotation Items
+    sq_items = frappe.get_all(
+        "Supplier Quotation Item",
+        filters={"parent": ["in", supplier_quotation_ids]},
         fields=["parent", "item_code", "qty", "rate", "amount", "uom"]
     )
 
     # Dictionary to store supplier data
     supplier_map = {}
 
-    for item in sq_items:
-        supplier_quotation = item["parent"]
-        supplier_name = frappe.get_value("Supplier Quotation", supplier_quotation, "supplier")
-
-        # Fetch supplier details + Terms field from Supplier Quotation
+    # Step 4: Initialize all suppliers first
+    for sq in supplier_quotations:
         supplier_details = frappe.get_value(
             "Supplier",
-            supplier_name,
+            sq.supplier,
             ["supplier_primary_address", "mobile_no", "email_id"],
             as_dict=True
         )
 
-        # Fetch and clean the Terms field (convert HTML to plain text)
-        raw_terms = frappe.get_value("Supplier Quotation", supplier_quotation, "terms")
-        terms = strip_html_tags(raw_terms)  # Convert to plain text
+        supplier_map[sq.name] = {
+            "supplier_quotation": sq.name,
+            "supplier_name": sq.supplier,
+            "supplier_primary_address": supplier_details.get("supplier_primary_address"),
+            "mobile_no": supplier_details.get("mobile_no"),
+            "email_id": supplier_details.get("email_id"),
+            "total_amount": 0,
+            "terms": strip_html_tags(sq.terms) if sq.terms else ""
+        }
 
-        # If supplier not already in the map, initialize their data
-        if supplier_name not in supplier_map:
-            supplier_map[supplier_name] = {
-                "supplier_quotation": supplier_quotation,
-                "supplier_name": supplier_name,
-                "supplier_primary_address": supplier_details.get("supplier_primary_address"),
-                "mobile_no": supplier_details.get("mobile_no"),
-                "email_id": supplier_details.get("email_id"),
-                "total_amount": 0,  # Initialize total amount
-                "terms": terms  # Store cleaned terms
-            }
+    # Step 5: Populate item data
+    for item in sq_items:
+        if item["parent"] in supplier_map:
+            supplier_map[item["parent"]][f"{item['item_code']}_uom"] = item["uom"]
+            supplier_map[item["parent"]][f"{item['item_code']}_qty"] = item["qty"]
+            supplier_map[item["parent"]][f"{item['item_code']}_price"] = item["rate"]
+            supplier_map[item["parent"]][f"{item['item_code']}_total"] = item["amount"]
+            supplier_map[item["parent"]]["total_amount"] += item["amount"]
 
-        # Add item-specific details
-        supplier_map[supplier_name][f"{item['item_code']}_uom"] = item["uom"]
-        supplier_map[supplier_name][f"{item['item_code']}_qty"] = item["qty"]
-        supplier_map[supplier_name][f"{item['item_code']}_price"] = item["rate"]
-        supplier_map[supplier_name][f"{item['item_code']}_total"] = item["amount"]
-
-        # Sum total price for all items
-        supplier_map[supplier_name]["total_amount"] += item["amount"]
-
-    # Convert dictionary to list format for the report
+    # Step 6: Convert dictionary to list format for the report
     data = list(supplier_map.values())
 
     return data
