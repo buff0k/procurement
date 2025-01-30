@@ -2,7 +2,14 @@
 # For license information, please see license.txt
 
 import frappe
+import re
 from collections import defaultdict
+
+def strip_html_tags(html):
+    """Remove HTML tags and return plain text."""
+    if not html:
+        return ""
+    return re.sub("<.*?>", "", html)  # Strip all HTML tags
 
 def execute(filters=None):
     if not filters:
@@ -45,8 +52,11 @@ def get_columns(filters):
             {"fieldname": f"{item}_total", "label": f"{item} Total Price", "fieldtype": "Currency", "width": 120},
         ])
 
-    # Add the final total column
-    columns.append({"fieldname": "total_amount", "label": "Total", "fieldtype": "Currency", "width": 150})
+    # Add the Total and Notes columns at the end
+    columns.extend([
+        {"fieldname": "total_amount", "label": "Total", "fieldtype": "Currency", "width": 150},
+        {"fieldname": "terms", "label": "Notes", "fieldtype": "Data", "width": 300}
+    ])
 
     return columns
 
@@ -67,13 +77,17 @@ def get_data(filters):
         supplier_quotation = item["parent"]
         supplier_name = frappe.get_value("Supplier Quotation", supplier_quotation, "supplier")
 
-        # Fetch additional supplier details
+        # Fetch supplier details + Terms field from Supplier Quotation
         supplier_details = frappe.get_value(
             "Supplier",
             supplier_name,
             ["supplier_primary_address", "mobile_no", "email_id"],
             as_dict=True
         )
+
+        # Fetch and clean the Terms field (convert HTML to plain text)
+        raw_terms = frappe.get_value("Supplier Quotation", supplier_quotation, "terms")
+        terms = strip_html_tags(raw_terms)  # Convert to plain text
 
         # If supplier not already in the map, initialize their data
         if supplier_name not in supplier_map:
@@ -83,7 +97,8 @@ def get_data(filters):
                 "supplier_primary_address": supplier_details.get("supplier_primary_address"),
                 "mobile_no": supplier_details.get("mobile_no"),
                 "email_id": supplier_details.get("email_id"),
-                "total_amount": 0  # Initialize total amount
+                "total_amount": 0,  # Initialize total amount
+                "terms": terms  # Store cleaned terms
             }
 
         # Add item-specific details
