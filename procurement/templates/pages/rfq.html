@@ -33,7 +33,7 @@
 <!-- ADD custom_details Rich Text Field -->
 {% if custom_details_about_rfq_boq_etc %}
 <div class="rfq-custom-details" style="margin-top: 20px; padding: 15px; border: 1px solid #ccc;">
-    {{ doc.custom_details_about_rfq_boq_etc.replace('/private/files/', '/api/method/procurement.api.get_rfq_image?file_url=/private/files/') | safe }}
+    {{ custom_details_about_rfq_boq_etc | safe }}
 </div>
 {% endif %}
 

@@ -3,6 +3,7 @@
 # Changes made to original by BuFf0k
 
 import frappe
+import re
 from frappe import _
 from frappe.utils import formatdate
 from erpnext.controllers.website_list_for_contact import get_customers_suppliers
@@ -30,7 +31,22 @@ def get_context(context):
 	context["title"] = frappe.form_dict.name
 
 	# BuFf0k = Fetch custom_details_about_rfq_boq_etc field and include it in the context
-	context.custom_details_about_rfq_boq_etc = getattr(context.doc, "custom_details_about_rfq_boq_etc", "")
+	context.custom_details_about_rfq_boq_etc = process_rfq_images(context.doc.custom_details_about_rfq_boq_etc)
+
+# BuFf0k fucntion to use api call to handle images for RFQs
+def process_rfq_images(html_content):
+	"""Find all private file URLs and replace them with API-accessible URLs, stripping ?fid=..."""
+	if not html_content:
+		return ""
+
+	# Regex to find private file URLs and strip ?fid=...
+	private_file_pattern = r'(["\'])/private/files/([^"\']+)(\?fid=[^"\']*)?(["\'])'
+
+	def replace_url(match):
+		original_url = match.group(2)  # Extract only the file path (strip ?fid=...)
+		return f'{match.group(1)}/api/method/procurement.api.get_rfq_image?file_url=/private/files/{original_url}{match.group(4)}'
+
+	return re.sub(private_file_pattern, replace_url, html_content)
 
 # BuFf0k - Modified get_supplier function to avoid Context Issues
 def get_supplier():
