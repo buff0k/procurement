@@ -49,7 +49,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-27 10:37:03.398964",
+ "modified": "2025-02-13 09:43:47.338556",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Company Abbreviations",
@@ -68,6 +68,29 @@
    "share": 1,
    "submit": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Procurement Admin",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Procurement User",
+   "select": 1,
+   "share": 1
   }
  ],
  "sort_field": "modified",

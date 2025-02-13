@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{YY}{company_abbr}{#####}.{location}",
+ "autoname": "format:{company_abbr}{pr_number}",
  "creation": "2024-07-27 20:03:00.035805",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -14,6 +14,7 @@
   "order_from_section",
   "company",
   "requested_by",
+  "pr_number",
   "column_break_kdgu",
   "deliver_to",
   "authorized_by",
@@ -162,10 +163,10 @@
   },
   {
    "fieldname": "official_company_order_no",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Official Company Order No",
-   "options": "Purchase Order",
+   "read_only": 1,
    "unique": 1
   },
   {
@@ -251,12 +252,20 @@
    "label": "Location",
    "options": "Location",
    "reqd": 1
+  },
+  {
+   "fieldname": "pr_number",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Purchase Requisition Number",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-01-27 11:33:32.739649",
+ "modified": "2025-02-13 09:32:16.717299",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition",

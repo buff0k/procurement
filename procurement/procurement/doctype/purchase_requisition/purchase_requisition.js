@@ -46,21 +46,25 @@ frappe.ui.form.on('Purchase Requisition', {
             calculate_totals(frm);
         });
         frm.trigger('update_employee_names');
+        // Check if the user has the "Procurement Admin" role
         if (frappe.user.has_role('Procurement Admin')) {
-            frm.set_df_property('official_company_order_no', 'read_only', 0);
-            frm.set_df_property('code', 'read_only', 0);
-            frm.set_df_property('location', 'read_only', 0);
-            frm.add_custom_button(__('Create Purchase Order'), function() {
-                frappe.model.open_mapped_doc({
-                    method: 'procurement.procurement.doctype.purchase_requisition.purchase_requisition.make_purchase_order',
-                    frm: frm
+            // Add a custom button to the form
+            frm.add_custom_button(__('Generate Order Number'), function() {
+                // Call the server-side method using the full module path
+                frappe.call({
+                    method: "procurement.procurement.doctype.purchase_requisition.purchase_requisition.generate_order_number",
+                    args: {
+                        doc: frm.doc.name
+                    },
+                    callback: function(r) {
+                        if (r.exc) {
+                            frappe.msgprint(__("Error: {0}").format(r.exc));
+                        } else {
+                            frm.refresh();
+                        }
+                    }
                 });
             });
-        } else {
-            // Set fields to read-only for all other roles
-            frm.set_df_property('official_company_order_no', 'read_only', 1);
-            frm.set_df_property('code', 'read_only', 1);
-            frm.set_df_property('location', 'read_only', 1);
         }
     },
 

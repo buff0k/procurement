@@ -4,7 +4,8 @@
 import frappe
 from frappe.model.document import Document
 from frappe.model.mapper import get_mapped_doc
-from frappe.utils import add_days, today
+from frappe.utils import add_days, today, nowdate, getdate
+from frappe import _
 
 class PurchaseRequisition(Document):
 	pass
@@ -112,3 +113,29 @@ def make_purchase_order(source_name, target_doc=None):
     doclist.insert(ignore_permissions=True)  # Insert the document directly into the database
 
     return doclist
+
+@frappe.whitelist()
+def generate_order_number(doc):
+    # Load the document
+    doc = frappe.get_doc("Purchase Requisition", doc)
+
+    # Check if the official_company_order_no is already populated
+    if doc.official_company_order_no:
+        frappe.throw(_("Order Number has already been generated and cannot be changed."))
+
+    # Generate the order number
+    current_date = getdate(nowdate())
+    year_last_two_digits = str(current_date.year)[-2:]
+    month_abbr = current_date.strftime("%b").upper()  # First three letters of the month
+    company_abbr = doc.company_abbr  # Assuming company_abbr is a field in the doctype
+    pr_number = doc.pr_number  # Assuming pr_number is a field in the doctype
+    site_code = doc.site_code  # Assuming site_code is a field in the doctype
+
+    # Construct the order number
+    order_number = f"{year_last_two_digits}{company_abbr}{month_abbr}{pr_number}/{site_code}"
+
+    # Update the official_company_order_no field
+    doc.official_company_order_no = order_number
+    doc.save()
+
+    frappe.msgprint(_("Order Number generated successfully: {0}").format(order_number))
