@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"HJvWuElKEE\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Procurement</span>\",\"col\":12}},{\"id\":\"RJhga48MRk\",\"type\":\"card\",\"data\":{\"card_name\":\"Ordering\",\"col\":4}},{\"id\":\"e5h0ObKIdm\",\"type\":\"card\",\"data\":{\"card_name\":\"Maintenance\",\"col\":4}},{\"id\":\"wzEUYZV0P3\",\"type\":\"card\",\"data\":{\"card_name\":\"ESD Procurement\",\"col\":4}}]",
+ "content": "[{\"id\":\"HJvWuElKEE\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Procurement</span>\",\"col\":12}},{\"id\":\"ksNWNnzsgN\",\"type\":\"card\",\"data\":{\"card_name\":\"Purchasing\",\"col\":4}},{\"id\":\"wzEUYZV0P3\",\"type\":\"card\",\"data\":{\"card_name\":\"ESD Procurement\",\"col\":4}},{\"id\":\"e5h0ObKIdm\",\"type\":\"card\",\"data\":{\"card_name\":\"Setup\",\"col\":4}}]",
  "creation": "2024-07-27 20:02:09.921282",
  "custom_blocks": [],
  "docstatus": 0,
@@ -13,94 +13,6 @@
  "is_hidden": 0,
  "label": "Procurement",
  "links": [
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Ordering",
-   "link_count": 2,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Purchase Requisition",
-   "link_count": 0,
-   "link_to": "Purchase Requisition",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Purchase Order",
-   "link_count": 0,
-   "link_to": "Purchase Order",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Maintenance",
-   "link_count": 5,
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Supplier",
-   "link_count": 0,
-   "link_to": "Supplier",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Item",
-   "link_count": 0,
-   "link_to": "Item",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Asset",
-   "link_count": 0,
-   "link_to": "Asset",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Site Code",
-   "link_count": 0,
-   "link_to": "Site Code",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Company Abbreviations",
-   "link_count": 0,
-   "link_to": "Company Abbreviations",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
   {
    "hidden": 0,
    "is_query_report": 0,
@@ -139,9 +51,97 @@
    "link_type": "Report",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Purchasing",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Purchase Requisition",
+   "link_count": 0,
+   "link_to": "Purchase Requisition",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Setup",
+   "link_count": 6,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Company Abbreviations",
+   "link_count": 0,
+   "link_to": "Company Abbreviations",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Site Code",
+   "link_count": 0,
+   "link_to": "Site Code",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Item Group",
+   "link_count": 0,
+   "link_to": "Item Group",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Item",
+   "link_count": 0,
+   "link_to": "Item",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Supplier",
+   "link_count": 0,
+   "link_to": "Supplier",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Cost Center",
+   "link_count": 0,
+   "link_to": "Cost Center",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2025-01-28 13:33:36.404889",
+ "modified": "2025-02-19 12:51:05.284758",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Procurement",

@@ -123,19 +123,49 @@ def generate_order_number(doc):
     if doc.official_company_order_no:
         frappe.throw(_("Order Number has already been generated and cannot be changed."))
 
-    # Generate the order number
+    # Generate the order number components
     current_date = getdate(nowdate())
     year_last_two_digits = str(current_date.year)[-2:]
     month_abbr = current_date.strftime("%b").upper()  # First three letters of the month
+    date_two_digits = current_date.strftime("%d")  # Day of the month as two digits
     company_abbr = doc.company_abbr  # Assuming company_abbr is a field in the doctype
     pr_number = doc.pr_number  # Assuming pr_number is a field in the doctype
     site_code = doc.site_code  # Assuming site_code is a field in the doctype
 
+    # Generate the sequence number for the order
+    sequence_number = get_next_sequence_number(year_last_two_digits, month_abbr, site_code)
+
     # Construct the order number
-    order_number = f"{year_last_two_digits}{company_abbr}{month_abbr}{pr_number}/{site_code}"
+    order_number = f"{year_last_two_digits}{month_abbr}{date_two_digits}{company_abbr}{sequence_number:03d}/{site_code}"
 
     # Update the official_company_order_no field
     doc.official_company_order_no = order_number
     doc.save()
 
     frappe.msgprint(_("Order Number generated successfully: {0}").format(order_number))
+
+def get_next_sequence_number(year_last_two_digits, month_abbr, site_code):
+    # Construct the key for the sequence
+    sequence_key = f"{year_last_two_digits}{month_abbr}/{site_code}"
+
+    # Get the last sequence number used for this key
+    last_sequence = frappe.get_all(
+        "Purchase Requisition",
+        filters={
+            "official_company_order_no": ["like", f"%{sequence_key}%"]
+        },
+        fields=["official_company_order_no"],
+        order_by="creation DESC",
+        limit=1
+    )
+
+    if last_sequence:
+        # Extract the last sequence number from the order number
+        last_order_number = last_sequence[0].official_company_order_no
+        last_sequence_number = int(last_order_number.split(company_abbr)[-1].split("/")[0])
+        next_sequence_number = last_sequence_number + 1
+    else:
+        # If no order exists for this key, start with 001
+        next_sequence_number = 1
+
+    return next_sequence_number
