@@ -8,7 +8,7 @@
  "for_user": "",
  "hide_custom": 0,
  "icon": "assets",
- "idx": 0,
+ "idx": 1,
  "indicator_color": "green",
  "is_hidden": 0,
  "label": "Procurement",
@@ -75,7 +75,7 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Setup",
-   "link_count": 6,
+   "link_count": 7,
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -139,9 +139,19 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Buyer Supplier Allocation",
+   "link_count": 0,
+   "link_to": "Buyer Supplier Allocation",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2025-02-19 12:51:05.284758",
+ "modified": "2025-02-19 20:52:44.179417",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Procurement",
