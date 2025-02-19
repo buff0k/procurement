@@ -80,6 +80,7 @@
    "fieldname": "requested_by",
    "fieldtype": "Link",
    "label": "Requested By",
+   "link_filters": "[[\"Employee\",\"status\",\"=\",\"Active\"]]",
    "options": "Employee",
    "print_hide": 1,
    "reqd": 1
@@ -151,6 +152,7 @@
    "fieldname": "deliver_to",
    "fieldtype": "Link",
    "label": "Deliver to",
+   "link_filters": "[[\"Employee\",\"status\",\"=\",\"Active\"]]",
    "options": "Employee",
    "print_hide": 1,
    "reqd": 1
@@ -173,6 +175,7 @@
    "fieldname": "authorized_by",
    "fieldtype": "Link",
    "label": "Authorized By",
+   "link_filters": "[[\"Employee\",\"status\",\"=\",\"Active\"]]",
    "options": "Employee",
    "print_hide": 1
   },
@@ -243,6 +246,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Site",
+   "link_filters": "[[\"Site Code\",\"docstatus\",\"=\",\"1\"]]",
    "options": "Site Code"
   },
   {
@@ -264,7 +268,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-19 13:29:42.495619",
+ "modified": "2025-02-19 15:53:52.839537",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition",
