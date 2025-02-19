@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "format:{company_abbr}{pr_number}",
  "creation": "2024-07-27 20:03:00.035805",
@@ -89,7 +90,7 @@
   {
    "fieldname": "asset",
    "fieldtype": "Link",
-   "label": "Plant No:",
+   "label": "Plant No",
    "options": "Asset"
   },
   {
@@ -99,19 +100,19 @@
   {
    "fieldname": "date",
    "fieldtype": "Date",
-   "label": "Date:"
+   "label": "Date"
   },
   {
    "fieldname": "machine_hours",
    "fieldtype": "Float",
-   "label": "Machine Hours:",
+   "label": "Machine Hours",
    "non_negative": 1,
    "precision": "2"
   },
   {
    "fieldname": "component",
    "fieldtype": "Data",
-   "label": "Component:"
+   "label": "Component"
   },
   {
    "fieldname": "company_abbr",
@@ -213,12 +214,12 @@
   {
    "fieldname": "req_name",
    "fieldtype": "Read Only",
-   "label": "Requested By:"
+   "label": "Requested By"
   },
   {
    "fieldname": "plant_make",
    "fieldtype": "Link",
-   "label": "Plant Make:",
+   "label": "Plant Make",
    "options": "Brand"
   },
   {
@@ -230,7 +231,7 @@
    "default": "_______________________",
    "fieldname": "auth_name",
    "fieldtype": "Read Only",
-   "label": "Authorized By:"
+   "label": "Authorized By"
   },
   {
    "fieldname": "buyer",
@@ -273,7 +274,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-19 20:06:52.748655",
+ "modified": "2025-02-19 20:32:25.637580",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition",
