@@ -14,33 +14,33 @@
   "order_from_section",
   "company",
   "requested_by",
+  "deliver_to",
   "authorized_by",
   "column_break_kdgu",
   "pr_number",
-  "deliver_to",
-  "section_break_xtex",
   "req_name",
+  "del_name",
+  "auth_name",
+  "section_break_xtex",
   "plant_make",
   "asset",
   "column_break_nzcl",
   "date",
   "machine_hours",
   "component",
+  "section_break_afgm",
+  "supplier",
+  "official_company_order_no",
+  "column_break_opkx",
+  "account",
+  "site_code",
+  "buyer",
   "section_break_qbca",
   "description_of_work",
   "item_list",
   "subtotal",
   "vat",
-  "total",
-  "section_break_afgm",
-  "del_name",
-  "supplier",
-  "official_company_order_no",
-  "auth_name",
-  "column_break_opkx",
-  "account",
-  "site_code",
-  "buyer"
+  "total"
  ],
  "fields": [
   {
@@ -59,7 +59,8 @@
   },
   {
    "fieldname": "section_break_xtex",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Asset Allocation Details"
   },
   {
    "fieldname": "company",
@@ -73,7 +74,7 @@
   {
    "fieldname": "order_from_section",
    "fieldtype": "Section Break",
-   "label": "User Fields",
+   "label": "Request Details",
    "print_hide": 1
   },
   {
@@ -123,7 +124,8 @@
   },
   {
    "fieldname": "section_break_qbca",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Order Details"
   },
   {
    "fieldname": "description_of_work",
@@ -146,7 +148,8 @@
   },
   {
    "fieldname": "section_break_afgm",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Accounting Details"
   },
   {
    "fieldname": "deliver_to",
@@ -238,8 +241,10 @@
   },
   {
    "fieldname": "account",
-   "fieldtype": "Data",
-   "label": "Code"
+   "fieldtype": "Link",
+   "label": "Code",
+   "link_filters": "[[\"Account\",\"company\",\"=\",\"eval: doc.company\"]]",
+   "options": "Account"
   },
   {
    "fieldname": "site_code",
@@ -268,7 +273,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-19 15:53:52.839537",
+ "modified": "2025-02-19 20:06:52.748655",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition",
