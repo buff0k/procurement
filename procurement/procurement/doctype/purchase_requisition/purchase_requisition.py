@@ -119,6 +119,10 @@ def generate_order_number(doc):
     # Load the document
     doc = frappe.get_doc("Purchase Requisition", doc)
 
+    # Check if the site_code field has been populated
+    if not doc.site_code:
+        frappe.throw(_("Site is required before generating an order number."))
+
     # Check if the official_company_order_no is already populated
     if doc.official_company_order_no:
         frappe.throw(_("Order Number has already been generated and cannot be changed."))
@@ -146,26 +150,50 @@ def generate_order_number(doc):
 
 def get_next_sequence_number(year_last_two_digits, month_abbr, site_code):
     # Construct the key for the sequence
-    sequence_key = f"{year_last_two_digits}{month_abbr}/{site_code}"
+    sequence_key = f"{year_last_two_digits}{month_abbr}%/{site_code}"
 
     # Get the last sequence number used for this key
-    last_sequence = frappe.get_all(
-        "Purchase Requisition",
-        filters={
-            "official_company_order_no": ["like", f"%{sequence_key}%"]
-        },
-        fields=["official_company_order_no"],
-        order_by="creation DESC",
-        limit=1
-    )
+    last_sequence = frappe.db.sql("""
+        SELECT official_company_order_no 
+        FROM `tabPurchase Requisition` 
+        WHERE official_company_order_no LIKE %s
+        ORDER BY creation DESC 
+        LIMIT 1
+    """, (sequence_key,), as_dict=True)
 
     if last_sequence:
-        # Extract the last sequence number from the order number
-        last_order_number = last_sequence[0].official_company_order_no
-        last_sequence_number = int(last_order_number.split(company_abbr)[-1].split("/")[0])
-        next_sequence_number = last_sequence_number + 1
-    else:
-        # If no order exists for this key, start with 001
-        next_sequence_number = 1
+        last_order_number = last_sequence[0]["official_company_order_no"]
+        frappe.logger().info(f"Last Order Found: {last_order_number}")
 
+        # Extract the numeric sequence portion
+        try:
+            # Extracts the number before "/SITE"
+            sequence_part = int(last_order_number.split("/")[0][-3:])
+            next_sequence_number = sequence_part + 1
+        except (IndexError, ValueError):
+            next_sequence_number = 1  # If extraction fails, default to 001
+    else:
+        next_sequence_number = 1  # Start from 001 if no previous order exists
+
+    frappe.logger().info(f"Next Sequence Number: {next_sequence_number}")
     return next_sequence_number
+
+@frappe.whitelist()
+def validate_before_submit(doc, method):
+    if not doc.invoice_received or not doc.grn_completed:
+        frappe.throw(_("You cannot submit this Purchase Requisition unless both 'Invoice Received' and 'GRN Completed' are checked."))
+
+@frappe.whitelist()
+def get_buyer_for_site(site_code):
+    # Get Buyer Site Allocation records
+    allocations = frappe.get_all("Buyer Site Allocation", fields=["name", "buyer"])
+
+    for allocation in allocations:
+        # Check if site_code exists in the child table
+        child_sites = frappe.get_all("Site Code List", 
+                                     filters={"parent": allocation.name, "site_code": site_code}, 
+                                     fields=["site_code"])
+        if child_sites:
+            return allocation.buyer  # Return the first matching buyer
+
+    return None  # No matching allocation found

@@ -136,9 +136,24 @@ frappe.ui.form.on('Purchase Requisition', {
                     frm.set_value('location', r.location);
                 }
             });
+        
+            // Fetch Buyer using custom server-side method
+            frappe.call({
+                method: "procurement.procurement.doctype.purchase_requisition.purchase_requisition.get_buyer_for_site",
+                args: { site_code: frm.doc.site_code },
+                callback: function(response) {
+                    if (response.message) {
+                        frm.set_value("buyer", response.message);
+                    } else {
+                        frm.set_value("buyer", null);
+                    }
+                }
+            });
+        
         } else {
-            // Clear the location field if site_code is not set
+            // Clear fields if site_code is not set
             frm.set_value('location', null);
+            frm.set_value('buyer', null);
         }
     }
 });

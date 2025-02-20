@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestBuyerSupplierAllocation(FrappeTestCase):
+class TestBuyerSiteAllocation(FrappeTestCase):
 	pass

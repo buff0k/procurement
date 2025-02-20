@@ -2,19 +2,18 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "field:buyer",
- "creation": "2025-02-19 20:47:23.871889",
+ "creation": "2025-02-20 10:35:45.375445",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "buyer",
-  "supplier_list"
+  "sites"
  ],
  "fields": [
   {
    "fieldname": "buyer",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "in_standard_filter": 1,
    "label": "Buyer",
    "link_filters": "[[\"User\",\"role\",\"=\",\"Procurement Admin\"]]",
    "options": "User",
@@ -22,18 +21,18 @@
    "unique": 1
   },
   {
-   "fieldname": "supplier_list",
+   "fieldname": "sites",
    "fieldtype": "Table",
-   "label": "Suplliers",
-   "options": "Supplier List"
+   "label": "Sites",
+   "options": "Site Code List"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-02-19 20:53:44.188485",
+ "modified": "2025-02-20 10:46:29.699591",
  "modified_by": "Administrator",
  "module": "Procurement",
- "name": "Buyer Supplier Allocation",
+ "name": "Buyer Site Allocation",
  "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
@@ -48,6 +47,28 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Procurement Admin",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Procurement User",
+   "select": 1,
+   "share": 1
   }
  ],
  "sort_field": "modified",

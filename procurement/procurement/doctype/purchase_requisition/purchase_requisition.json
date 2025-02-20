@@ -32,6 +32,8 @@
   "section_break_afgm",
   "supplier",
   "official_company_order_no",
+  "invoice_received",
+  "grn_completed",
   "column_break_opkx",
   "account",
   "site_code",
@@ -84,8 +86,7 @@
    "label": "Requested By",
    "link_filters": "[[\"Employee\",\"status\",\"=\",\"Active\"]]",
    "options": "Employee",
-   "print_hide": 1,
-   "reqd": 1
+   "print_hide": 1
   },
   {
    "fieldname": "asset",
@@ -158,8 +159,7 @@
    "label": "Deliver to",
    "link_filters": "[[\"Employee\",\"status\",\"=\",\"Active\"]]",
    "options": "Employee",
-   "print_hide": 1,
-   "reqd": 1
+   "print_hide": 1
   },
   {
    "fieldname": "supplier",
@@ -171,9 +171,9 @@
    "fieldname": "official_company_order_no",
    "fieldtype": "Data",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Official Company Order No",
-   "read_only": 1,
-   "unique": 1
+   "permlevel": 1
   },
   {
    "fieldname": "authorized_by",
@@ -238,7 +238,8 @@
    "fieldtype": "Link",
    "label": "Buyer",
    "link_filters": "[[\"User\",\"role\",\"=\",\"Procurement Admin\"]]",
-   "options": "User"
+   "options": "User",
+   "permlevel": 1
   },
   {
    "fieldname": "account",
@@ -269,12 +270,26 @@
    "in_standard_filter": 1,
    "label": "Purchase Requisition Number",
    "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "invoice_received",
+   "fieldtype": "Check",
+   "label": "Invoice Received",
+   "permlevel": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "grn_completed",
+   "fieldtype": "Check",
+   "label": "GRN Completed",
+   "permlevel": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-19 20:32:25.637580",
+ "modified": "2025-02-20 12:52:34.974391",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition",

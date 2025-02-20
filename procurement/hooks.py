@@ -22,11 +22,17 @@ fixtures = [
 	{"dt": "Custom DocPerm", "filters": [["role", "in", ["Procurement Admin", "Procurement User"]]]},
 ]
 website_route_rules = [
-    {"from_route": "/rfq/<name>", "to_route": "rfq"}
+	{"from_route": "/rfq/<name>", "to_route": "rfq"}
 ]
 api_routes = [
-    {"from_route": "/api/method/procurement.api.get_rfq_image", "to_route": "procurement.api.get_rfq_image"}
+	{"from_route": "/api/method/procurement.api.get_rfq_image", "to_route": "procurement.api.get_rfq_image"}
 ]
+doc_events = {
+	"Purchase Requisition": {
+		"before_submit": "procurement.procurement.doctype.purchase_requisition.purchase_requisition.validate_before_submit"
+	}
+}
+
 # Includes in <head>
 # ------------------
 

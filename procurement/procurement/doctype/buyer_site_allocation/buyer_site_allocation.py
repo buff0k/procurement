@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class SupplierList(Document):
+class BuyerSiteAllocation(Document):
 	pass

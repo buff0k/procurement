@@ -103,15 +103,15 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Buyer Supplier Allocation",
+   "label": "Buyer Site Allocation",
    "link_count": 0,
-   "link_to": "Buyer Supplier Allocation",
+   "link_to": "Buyer Site Allocation",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
   }
  ],
- "modified": "2025-02-19 21:11:10.573783",
+ "modified": "2025-02-20 10:44:55.269252",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Procurement",
