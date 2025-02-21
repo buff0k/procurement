@@ -18,8 +18,8 @@ add_to_apps_screen = [
 	}
 ]
 fixtures = [
-	{"dt": "Role", "filters": [["name", "in", ["Procurement Admin",	"Procurement User"]]]}, 
-	{"dt": "Custom DocPerm", "filters": [["role", "in", ["Procurement Admin", "Procurement User"]]]},
+	{"dt": "Role", "filters": [["name", "in", ["Procurement Admin",	"Procurement User", "Procurement Manager"]]]}, 
+	{"dt": "Custom DocPerm", "filters": [["role", "in", ["Procurement Admin", "Procurement User", "Procurement Manager"]]]},
 ]
 website_route_rules = [
 	{"from_route": "/rfq/<name>", "to_route": "rfq"}
