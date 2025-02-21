@@ -237,7 +237,7 @@
    "fieldname": "buyer",
    "fieldtype": "Link",
    "label": "Buyer",
-   "link_filters": "[[\"User\",\"role\",\"=\",\"Procurement Admin\"]]",
+   "link_filters": "[[\"User\",\"role\",\"=\",\"Procurement Admin\"],[\"User\",\"enabled\",\"=\",1]]",
    "options": "User",
    "permlevel": 1
   },
@@ -289,7 +289,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-21 15:23:05.299835",
+ "modified": "2025-02-21 16:00:54.716089",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition",
