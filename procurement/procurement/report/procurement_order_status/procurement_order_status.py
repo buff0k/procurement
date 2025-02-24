@@ -11,6 +11,7 @@ def execute(filters=None):
 
 def get_columns():
     return [
+        {"fieldname": "name", "label": _("PR Doc"), "fieldtype": "Link", "options": "Purchase Requisition", "width": 100},
         {"fieldname": "site_code", "label": _("Site"), "fieldtype": "Link", "options": "Site Code", "width": 50},
         {"fieldname": "date", "label": _("Date"), "fieldtype": "Date", "width": 120},
         {"fieldname": "pr_number", "label": _("PR No."), "fieldtype": "Int", "width": 100},
@@ -31,6 +32,7 @@ def get_data(filters):
     conditions = get_conditions(filters)
     data = frappe.db.sql(f"""
         SELECT
+            pr.name,
             pr.site_code,
             pr.date,
             pr.pr_number,

@@ -24,11 +24,23 @@ frappe.query_reports["Procurement Order Status"] = {
         }
     ],
 
-    onload: function(report) {
-        // This function can be used to handle other onload actions for the report
+    formatter: function (value, row, column, data, default_formatter) {
+        // Apply default formatting first
+        value = default_formatter(value, row, column, data);
+
+        // Determine text color
+        let text_color = "";
+        if (!data["official_company_order_no"]) {
+            text_color = "#D4A017"; // Golden Yellow (Better Visibility)
+        } else if (!data["invoice_no"]) {
+            text_color = "#FF0000"; // Red
+        }
+
+        // Apply text color
+        if (text_color) {
+            return `<span style="color: ${text_color};">${value}</span>`;
+        }
+
+        return value;
     },
-    // If you need any custom logic on filter changes, you can use this method
-    filter: function() {
-        // Custom logic for when the filter changes can go here
-    }
 };
