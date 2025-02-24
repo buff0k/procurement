@@ -32,8 +32,6 @@
   "section_break_afgm",
   "supplier",
   "official_company_order_no",
-  "invoice_received",
-  "grn_completed",
   "column_break_opkx",
   "account",
   "site_code",
@@ -75,6 +73,7 @@
    "fieldname": "company",
    "fieldtype": "Link",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Company",
    "options": "Company",
    "print_hide": 1,
@@ -107,7 +106,8 @@
   {
    "fieldname": "date",
    "fieldtype": "Date",
-   "label": "Date"
+   "label": "Date",
+   "reqd": 1
   },
   {
    "fieldname": "machine_hours",
@@ -218,6 +218,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "default": "_______________________",
    "fieldname": "req_name",
    "fieldtype": "Read Only",
    "label": "Requested By"
@@ -229,6 +230,7 @@
    "options": "Brand"
   },
   {
+   "default": "_______________________",
    "fieldname": "del_name",
    "fieldtype": "Read Only",
    "label": "Deliver to"
@@ -278,20 +280,6 @@
    "reqd": 1
   },
   {
-   "default": "0",
-   "fieldname": "invoice_received",
-   "fieldtype": "Check",
-   "label": "Invoice Received",
-   "permlevel": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "grn_completed",
-   "fieldtype": "Check",
-   "label": "GRN Completed",
-   "permlevel": 1
-  },
-  {
    "fieldname": "section_break_voeu",
    "fieldtype": "Section Break"
   },
@@ -313,9 +301,9 @@
   },
   {
    "fieldname": "division",
-   "fieldtype": "Select",
+   "fieldtype": "Link",
    "label": "Division",
-   "options": "\nHO\nWS"
+   "options": "Division"
   },
   {
    "fieldname": "section_break_qdta",
@@ -325,7 +313,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-24 10:20:43.619046",
+ "modified": "2025-02-24 15:16:59.579178",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition",

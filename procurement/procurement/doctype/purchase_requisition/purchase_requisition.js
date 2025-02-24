@@ -2,24 +2,6 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Purchase Requisition', {
-   onload: function (frm) {
-        // Set the default company on load
-        if (!frm.doc.company) {
-            frappe.call({
-                method: "frappe.client.get_value",
-                args: {
-                    doctype: "Global Defaults",
-                    fieldname: "default_company",
-                },
-                callback: function (r) {
-                    if (r.message && r.message.default_company) {
-                        frm.set_value("company", r.message.default_company);
-                    }
-                }
-            });
-        }
-    },
-
     company: function (frm) {
         if (frm.doc.company) {
             // Call server script to fetch company details

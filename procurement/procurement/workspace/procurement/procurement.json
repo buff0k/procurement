@@ -8,7 +8,7 @@
  "for_user": "",
  "hide_custom": 0,
  "icon": "assets",
- "idx": 1,
+ "idx": 2,
  "indicator_color": "green",
  "is_hidden": 0,
  "label": "Procurement",
@@ -85,7 +85,7 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Setup",
-   "link_count": 5,
+   "link_count": 6,
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -139,9 +139,19 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Division",
+   "link_count": 0,
+   "link_to": "Division",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2025-02-24 14:51:10.195580",
+ "modified": "2025-02-24 15:15:01.489044",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Procurement",

@@ -18,7 +18,7 @@ def get_columns():
         {"fieldname": "account", "label": _("Cost Code"), "fieldtype": "Link", "options": "Account", "width": 100},
         {"fieldname": "asset", "label": _("Fleet No."), "fieldtype": "Link", "options": "Asset", "width": 100},
         {"fieldname": "req_name", "label": _("Requestor"), "fieldtype": "Data", "width": 150},
-        {"fieldname": "division", "label": _("Div"), "fieldtype": "Select", "width": 20},
+        {"fieldname": "division", "label": _("Div"), "fieldtype": "Link", "options": "Division", "width": 20},
         {"fieldname": "component", "label": _("Component"), "fieldtype": "Data", "width": 150},
         {"fieldname": "description", "label": _("Description"), "fieldtype": "Data", "width": 200},
         {"fieldname": "supplier", "label": _("Supplier"), "fieldtype": "Link", "options": "Supplier", "width": 150},
