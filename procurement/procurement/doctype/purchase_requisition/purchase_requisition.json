@@ -43,7 +43,13 @@
   "item_list",
   "subtotal",
   "vat",
-  "total"
+  "total",
+  "section_break_voeu",
+  "invoice_count",
+  "column_break_xqao",
+  "division",
+  "section_break_qdta",
+  "attached_docs"
  ],
  "fields": [
   {
@@ -284,12 +290,42 @@
    "fieldtype": "Check",
    "label": "GRN Completed",
    "permlevel": 1
+  },
+  {
+   "fieldname": "section_break_voeu",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "attached_docs",
+   "fieldtype": "Table",
+   "label": "Attachments",
+   "options": "Attach Documents"
+  },
+  {
+   "fieldname": "invoice_count",
+   "fieldtype": "Int",
+   "label": "Invoice Count",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "column_break_xqao",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "division",
+   "fieldtype": "Select",
+   "label": "Division",
+   "options": "\nHO\nWS"
+  },
+  {
+   "fieldname": "section_break_qdta",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-21 16:00:54.716089",
+ "modified": "2025-02-24 10:20:43.619046",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition",
@@ -301,6 +337,7 @@
    "delete": 1,
    "email": 1,
    "export": 1,
+   "import": 1,
    "print": 1,
    "read": 1,
    "report": 1,
