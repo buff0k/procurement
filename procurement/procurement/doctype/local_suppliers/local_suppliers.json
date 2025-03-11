@@ -55,8 +55,13 @@
   }
  ],
  "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2024-10-08 08:36:37.184753",
+ "links": [
+  {
+   "link_doctype": "Request for Quotation",
+   "link_fieldname": "custom_local_community_procurement"
+  }
+ ],
+ "modified": "2025-03-11 15:38:19.819030",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Local Suppliers",
