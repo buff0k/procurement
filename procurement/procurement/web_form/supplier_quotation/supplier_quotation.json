@@ -1,0 +1,107 @@
+{
+ "allow_comments": 1,
+ "allow_delete": 1,
+ "allow_edit": 1,
+ "allow_incomplete": 1,
+ "allow_multiple": 1,
+ "allow_print": 1,
+ "anonymous": 0,
+ "apply_document_permissions": 1,
+ "button_label": "Save",
+ "condition_json": "[]",
+ "creation": "2025-04-30 13:14:57.193549",
+ "doc_type": "Supplier Quotation",
+ "docstatus": 0,
+ "doctype": "Web Form",
+ "idx": 0,
+ "is_standard": 1,
+ "list_columns": [
+  {
+   "fieldname": "transaction_date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "quotation_number",
+   "fieldtype": "Data",
+   "label": "Quotation Number"
+  },
+  {
+   "fieldname": "total",
+   "fieldtype": "Currency",
+   "label": "Total"
+  }
+ ],
+ "login_required": 1,
+ "max_attachment_size": 0,
+ "modified": "2025-04-30 13:37:22.984677",
+ "modified_by": "Administrator",
+ "module": "Procurement",
+ "name": "supplier-quotation",
+ "owner": "Administrator",
+ "published": 1,
+ "route": "supplier-quotation",
+ "show_attachments": 1,
+ "show_list": 1,
+ "show_sidebar": 1,
+ "success_message": "You have succesfully submitted the changes to your quotation.",
+ "success_title": "Quotation Sucesfully Submitted",
+ "success_url": "/supplier-quotation",
+ "title": "Supplier Quotation",
+ "web_form_fields": [
+  {
+   "allow_read_on_all_link_options": 0,
+   "fieldname": "quotation_number",
+   "fieldtype": "Link",
+   "hidden": 0,
+   "label": "Quotation Number",
+   "max_length": 0,
+   "max_value": 0,
+   "precision": "",
+   "read_only": 1,
+   "reqd": 1,
+   "show_in_filter": 0
+  },
+  {
+   "allow_read_on_all_link_options": 0,
+   "fieldname": "supplier_name",
+   "fieldtype": "Data",
+   "hidden": 0,
+   "label": "Supplier Name",
+   "max_length": 0,
+   "max_value": 0,
+   "precision": "",
+   "read_only": 1,
+   "reqd": 0,
+   "show_in_filter": 0
+  },
+  {
+   "allow_read_on_all_link_options": 0,
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "hidden": 0,
+   "label": "Items",
+   "max_length": 0,
+   "max_value": 0,
+   "options": "Supplier Quotation Item",
+   "precision": "",
+   "read_only": 0,
+   "reqd": 1,
+   "show_in_filter": 0
+  },
+  {
+   "allow_read_on_all_link_options": 0,
+   "fieldname": "custom_attachments",
+   "fieldtype": "Table",
+   "hidden": 0,
+   "label": "Attachments",
+   "max_length": 0,
+   "max_value": 0,
+   "options": "Supplier Quotation Attachment",
+   "precision": "",
+   "read_only": 0,
+   "reqd": 0,
+   "show_in_filter": 0
+  }
+ ]
+}
