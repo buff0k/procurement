@@ -1,0 +1,16 @@
+{% extends "templates/web.html" %}
+{% block page_content %}
+<h1>Supplier Quotations</h1>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Our Reference</th>
+            <th>Your Reference</th>
+            <th>Quotation Date</th>
+            <th>Total Value</th>
+        </tr>
+    </thead>
+    <tbody id="quotation-list"></tbody>
+</table>
+<script src="/assets/procurement/js/supplier_quotation_list.js"></script>
+{% endblock %}

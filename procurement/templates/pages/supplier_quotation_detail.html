@@ -1,0 +1,88 @@
+{% extends "templates/web.html" %}
+
+{% block page_content %}
+<meta name="csrf_token" content="{{ csrf_token }}">
+<div id="quotation-container" data-doc="{{ doc.name | e }}">
+    <h2>Supplier Quotation:</h2>
+    <h3>{{ doc.name }}</h3>
+    <div>
+        <strong>Status:</strong> <span>{{ doc.status }}</span>
+    </div>
+    
+    <!-- Editable Quotation Number -->
+    <div>
+        <strong>Quotation Number:</strong>
+        <input id="quotation_number" class="form-control" type="text" value="{{ doc.quotation_number or '' }}" {% if not doc.has_permission('write') %}readonly{% endif %}>
+    </div>
+
+    <h3>Quotation Items</h3>
+    <table id="items-table" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Item Code</th>
+                <th>Description</th>
+                <th>UOM</th>
+                <th>Qty</th>
+                <th>Rate</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in doc.items %}
+            <tr data-item="{{ item.name }}">
+                <td>{{ item.item_code }}</td>
+                <td>{{ item.description }}</td>
+                <td>
+                    <select class="uom">
+                        {% for uom in uoms %}
+                            <option value="{{ uom.name }}" {% if uom.name == item.uom %}selected{% endif %}>{{ uom.name }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td><input class="qty" type="number" value="{{ item.qty }}"></td>
+                <td><input class="rate" type="number" value="{{ item.rate }}"></td>
+                <td class="amount">{{ item.amount }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Attachments</h3>
+    <table id="attachments-table" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>File</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for attachment in custom_attachments %}
+            <tr>
+                <td><a href="{{ attachment.file_url }}" target="_blank">Download</a></td>
+                <td>{{ attachment.description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- File upload input -->
+    <div>
+        <label for="new-attachment">Attach New File</label>
+        <input type="file" id="new-attachment" />
+        <input type="text" id="new-attachment-description" class="form-control mt-2" placeholder="Enter description for the file">
+        <button type="button" id="upload-attachment" class="btn btn-success mt-2">Upload</button>
+    </div>
+
+    <h4>Notes or Comments</h4>
+    <textarea id="terms" rows="5" class="form-control">{{ doc.terms | striptags }}</textarea>
+    <div class="mt-3">
+        <button id="save-quotation" class="btn btn-primary">Save</button>
+        <button id="submit-quotation" class="btn btn-success">Submit Quotation</button>
+        <button id="delete-quotation" class="btn btn-danger">Delete</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+    <script src="/assets/procurement/js/supplier_quotation_portal.js"></script>
+{% endblock %}

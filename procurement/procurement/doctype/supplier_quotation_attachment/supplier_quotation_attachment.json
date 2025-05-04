@@ -11,6 +11,7 @@
  ],
  "fields": [
   {
+   "columns": 1,
    "fieldname": "file_url",
    "fieldtype": "Attach",
    "in_list_view": 1,
@@ -18,20 +19,23 @@
    "reqd": 1
   },
   {
+   "columns": 9,
    "fieldname": "description",
    "fieldtype": "Small Text",
    "label": "Document Description"
   }
  ],
+ "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-01-31 10:29:38.769043",
+ "modified": "2025-04-30 13:55:23.701971",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Supplier Quotation Attachment",
  "owner": "Administrator",
  "permissions": [],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []
