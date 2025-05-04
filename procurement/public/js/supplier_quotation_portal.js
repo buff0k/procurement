@@ -1,45 +1,57 @@
-let quill;
-
 frappe.ready(() => {
-    const termsEl = document.getElementById('terms-editor');
-    if (termsEl) {
-        quill = new Quill('#terms-editor', {
-            theme: 'snow'
-        });
-    }
-
     const quotationName = document.getElementById("quotation-container").dataset.doc;
 
     // Save Quotation
     document.getElementById("save-quotation").addEventListener("click", async () => {
-        const doc = {
-            name: quotationName,
-            quotation_number: document.getElementById("quotation_number").value || "",
-            terms: document.getElementById("terms").value || "", // Get terms from the input field
-            items: []
-        };
-
-        document.querySelectorAll("#items-table tbody tr").forEach(row => {
-            const itemCode = row.querySelector("td:nth-child(1)").textContent.trim();  // Get item_code correctly
-            const itemName = row.dataset.item;  // Ensure correct item name handling
-            const qty = parseFloat(row.querySelector(".qty").value) || 0;
-            const rate = parseFloat(row.querySelector(".rate").value) || 0;
-            const uom = row.querySelector(".uom").value;
-
-            if (itemCode) {  // Ensure item_code is not empty
-                doc.items.push({ item_code: itemCode, item_name: itemName, qty, rate, uom });
-            } else {
-                frappe.msgprint("Item code is missing for one or more items.");
-            }
-        });
-
         try {
+            // Step 1: Fetch full doc from the backend
             const r = await frappe.call({
-                method: "procurement.api.update_supplier_quotation",
-                args: { doc }
+                method: "frappe.client.get",
+                args: {
+                    doctype: "Supplier Quotation",
+                    name: quotationName
+                }
             });
 
-            if (r.message) {
+            const doc = r.message;
+            doc.quotation_number = document.getElementById("quotation_number").value || "";
+            doc.terms = document.getElementById("terms").value || "";
+
+            // Step 2: Build a map of updated values from the UI
+            const updates = {};
+            document.querySelectorAll("#items-table tbody tr").forEach(row => {
+                const itemCode = row.querySelector("td:nth-child(1)").textContent.trim();
+                const qty = parseFloat(row.querySelector(".qty").value) || 0;
+                const rate = parseFloat(row.querySelector(".rate").value) || 0;
+                const uom = row.querySelector(".uom").value;
+                if (itemCode) {
+                    updates[itemCode] = { qty, rate, uom };
+                }
+            });
+
+            // Step 3: Merge updated fields into existing items
+            doc.items.forEach(item => {
+                if (updates[item.item_code]) {
+                    const update = updates[item.item_code];
+                    item.qty = update.qty;
+                    item.rate = update.rate;
+                    item.uom = update.uom;
+                    // Keep other fields (e.g. request_for_quotation) untouched
+                }
+            });
+
+            // Step 4: Send merged doc to backend
+            const saveRes = await frappe.call({
+                method: "procurement.api.patch_supplier_quotation",
+                args: {
+                    name: quotationName,
+                    quotation_number: doc.quotation_number,
+                    terms: doc.terms,
+                    updated_items: doc.items  // Includes qty, rate, uom, item_code
+                }
+            });
+
+            if (saveRes.message) {
                 frappe.msgprint("Quotation updated successfully");
                 location.reload();
             }

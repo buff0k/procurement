@@ -208,3 +208,31 @@ def add_attachment_to_supplier_quotation(quotation, file_url, description=""):
     doc.save()
     frappe.db.commit()
     return True
+
+@frappe.whitelist()
+def patch_supplier_quotation(name, quotation_number=None, terms=None, updated_items=None):
+    import json
+
+    if isinstance(updated_items, str):
+        updated_items = json.loads(updated_items)
+
+    doc = frappe.get_doc("Supplier Quotation", name)
+
+    if quotation_number is not None:
+        doc.quotation_number = quotation_number
+    if terms is not None:
+        doc.terms = terms
+
+    # Build a map for faster lookup
+    updated_map = {item['item_code']: item for item in updated_items}
+
+    for item in doc.items:
+        if item.item_code in updated_map:
+            update = updated_map[item.item_code]
+            item.qty = update.get('qty', item.qty)
+            item.rate = update.get('rate', item.rate)
+            item.uom = update.get('uom', item.uom)
+            # Keep all other fields untouched
+
+    doc.save()
+    return True
