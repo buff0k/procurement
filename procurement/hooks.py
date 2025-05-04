@@ -23,7 +23,6 @@ fixtures = [
 ]
 website_route_rules = [
 	{"from_route": "/rfq/<name>", "to_route": "rfq"},
-    {"from_route": "/supplier-quotations", "to_route": "supplier_quotation_list"},
     {"from_route": "/supplier-quotations/<name>", "to_route": "supplier_quotation_detail"}
 ]
 api_routes = [
@@ -34,7 +33,6 @@ doc_events = {
 		"before_submit": "procurement.procurement.doctype.purchase_requisition.purchase_requisition.validate_before_submit"
 	}
 }
-
 # Includes in <head>
 # ------------------
 

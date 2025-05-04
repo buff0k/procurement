@@ -49,14 +49,29 @@ def get_rfq_image(file_url):
     response.headers["Content-Disposition"] = f"inline; filename={file_url.split('/')[-1]}"
     return response
 
-@frappe.whitelist()
 def get_supplier_quotations():
-    supplier = frappe.session.user
-    return frappe.get_all(
-        "Supplier Quotation",
-        filters={"owner": supplier},
-        fields=["name", "quotation_number", "transaction_date", "grand_total", "currency"]
+    user = frappe.session.user
+
+    # Get linked supplier
+    supplier = frappe.db.get_value("Supplier Portal User", {"user": user}, "parent")
+    if not supplier:
+        return []
+
+    quotations = frappe.get_all("Supplier Quotation",
+        filters={"supplier": supplier},
+        fields=["name", "quotation_number", "transaction_date", "grand_total", "currency", "docstatus"],
+        order_by="creation desc"
     )
+
+    # Add docstatus label
+    for q in quotations:
+        q["docstatus_label"] = {
+            0: "Draft",
+            1: "Submitted",
+            2: "Cancelled"
+        }.get(q["docstatus"], "Draft")
+
+    return quotations
 
 @frappe.whitelist()
 def save_supplier_quotation(name, quotation_number, items, attachments):
