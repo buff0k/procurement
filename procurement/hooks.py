@@ -22,8 +22,8 @@ fixtures = [
 	{"dt": "Custom DocPerm", "filters": [["role", "in", ["Procurement Admin", "Procurement User", "Procurement Manager", "Supplier"]]]},
 ]
 website_route_rules = [
-	{"from_route": "/rfq/<name>", "to_route": "rfq"},
-    {"from_route": "/supplier-quotations/<name>", "to_route": "supplier_quotation_detail"}
+	{"from_route": "/rfq/<name>", "to_route": "request_for_quotatoin_detail"},
+    {"from_route": "/supplier_quotation_list/<name>", "to_route": "supplier_quotation_detail"}
 ]
 api_routes = [
 	{"from_route": "/api/method/procurement.api.get_rfq_image", "to_route": "procurement.api.get_rfq_image"}
