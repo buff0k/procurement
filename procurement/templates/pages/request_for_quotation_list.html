@@ -1,31 +1,31 @@
 {% extends "templates/web.html" %}
 
-{% block title %}My Requests for Quotation{% endblock %}
+{% block title %}Currently Open Requests for Quotations{% endblock %}
 
 {% block page_content %}
 <h2 class="mb-4">My Requests for Quotation</h2>
-<p>Click on the RFQ Number to view the details</p>
+<p>Click on the RFQ Number to view more details.</p>
 
 {% if rfqs and rfqs|length %}
   <div class="quotation-list grid grid-cols-1 gap-4">
-    {% for q in rfqs %}
+    {% for rfq in rfqs %}
       <div class="card p-4 border rounded-lg shadow-sm hover:shadow transition-all">
         <div class="flex justify-between items-center mb-2">
           <div>
-            <a href="/request_for_quotation_list/{{ q.name }}" class="text-blue-600 font-semibold text-lg">
-              {{ q.name }}
+            <a href="/request_for_quotation/{{ rfq.name }}" class="text-blue-600 font-semibold text-lg">
+              {{ rfq.name }}
             </a>
-            <p class="text-sm text-gray-500">Status: {{ q.status }}</p>
+            <p class="text-sm text-gray-500 mb-0">Status: {{ rfq.status }}</p>
           </div>
           <div class="text-right">
-            <p class="text-sm">{{ q.transaction_date }}</p>
+            <p class="text-sm mb-0">{{ rfq.transaction_date }}</p>
           </div>
         </div>
-        {% if q["items"] %}
+        {% if rfq["items"] %}
           <div class="text-sm text-gray-700">
             <strong>Items:</strong>
             <ul class="list-disc list-inside ml-4">
-              {% for item in q["items"] %}
+              {% for item in rfq["items"] %}
                 <li>{{ item.item_name }}</li>
               {% endfor %}
             </ul>
@@ -35,6 +35,6 @@
     {% endfor %}
   </div>
 {% else %}
-  <p>No requests for quotation found.</p>
+  <p>No Requests for Quotation found.</p>
 {% endif %}
 {% endblock %}

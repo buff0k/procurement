@@ -3,23 +3,27 @@
 
 import frappe
 from frappe import _
+from frappe.utils import today
 
 def get_context(context):
-    if not frappe.session.user:
-        frappe.throw(_("You must be logged in to access this page."), frappe.PermissionError)
+    context.no_cache = 1
+    context.title = _("My Requests for Quotation")
+    context.show_sidebar = True
 
-    # Fetch Supplier linked to this user
-    supplier = frappe.db.get_value("Supplier", {"portal_users.user": frappe.session.user}, "name")
-
+    supplier = get_supplier_for_user(frappe.session.user)
     if not supplier:
-        frappe.throw(_("You do not have permission to access RFQs."), frappe.PermissionError)
+        frappe.throw(_("You are not authorized to view RFQs."), frappe.PermissionError)
 
-    # Get RFQs this supplier is allowed to see
     rfqs = frappe.get_all(
         "Request for Quotation",
-        filters={"docstatus": ["<", 2]},
-        fields=["name", "status", "transaction_date"],
-        order_by="creation desc"
+        filters={
+            "supplier": supplier,
+            "docstatus": 1,
+            "status": ["!=", "Cancelled"],
+            "schedule_date": [">=", today()]
+    },
+        fields=["name", "transaction_date", "status"],
+        order_by="`tabRequest for Quotation`.modified desc"
     )
 
     for rfq in rfqs:
@@ -30,4 +34,11 @@ def get_context(context):
         )
 
     context.rfqs = rfqs
-    return context
+
+def get_supplier_for_user(user):
+    result = frappe.get_all(
+        "Portal User",
+        filters={"user": user},
+        fields=["parent"]
+    )
+    return result[0].parent if result else None

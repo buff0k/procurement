@@ -22,7 +22,7 @@ fixtures = [
 	{"dt": "Custom DocPerm", "filters": [["role", "in", ["Procurement Admin", "Procurement User", "Procurement Manager", "Supplier"]]]},
 ]
 website_route_rules = [
-	{"from_route": "/rfq/<name>", "to_route": "request_for_quotatoin_detail"},
+	{"from_route": "/request_for_quotation/<name>", "to_route": "request_for_quotation_detail"},
     {"from_route": "/supplier_quotation_list/<name>", "to_route": "supplier_quotation_detail"}
 ]
 api_routes = [
@@ -33,6 +33,18 @@ doc_events = {
 		"before_submit": "procurement.procurement.doctype.purchase_requisition.purchase_requisition.validate_before_submit"
 	}
 }
+standard_portal_menu_items = [
+	{
+		"title": "Open RFQs",
+		"route": "/request_for_quotation_list",
+		"role": "Supplier",
+	},
+	{
+		"title": "My Quotations",
+		"route": "/supplier_quotation_list",
+		"role": "Supplier",
+	}
+]
 # Includes in <head>
 # ------------------
 
