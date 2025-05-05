@@ -37,11 +37,13 @@ standard_portal_menu_items = [
 	{
 		"title": "Open RFQs",
 		"route": "/request_for_quotation_list",
+		"reference_doctype": "Request for Quotation",
 		"role": "Supplier",
 	},
 	{
 		"title": "My Quotations",
 		"route": "/supplier_quotation_list",
+		"reference_doctype": "Supplier Quotation",
 		"role": "Supplier",
 	}
 ]
