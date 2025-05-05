@@ -5,7 +5,19 @@
 {% endblock %}
 
 {% block script %}
-<script>{% include "templates/includes/rfq.js" %}</script>
+    <script>
+        window.doc = {{ doc.as_json() }};
+        doc.supplier = "{{ doc.supplier }}";
+        doc.currency = "{{ doc.currency }}";
+        doc.number_format = "{{ doc.number_format }}";
+        doc.buying_price_list = "{{ doc.buying_price_list }}";
+    </script>
+    <script src="/assets/procurement/js/request_for_quotation_detail.js"></script>
+    <script>
+        frappe.ready(() => {
+            new rfq();
+        });
+    </script>
 {% endblock %}
 
 {% block breadcrumbs %}

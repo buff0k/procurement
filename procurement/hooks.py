@@ -22,7 +22,7 @@ fixtures = [
 	{"dt": "Custom DocPerm", "filters": [["role", "in", ["Procurement Admin", "Procurement User", "Procurement Manager", "Supplier"]]]},
 ]
 website_route_rules = [
-	{"from_route": "/request_for_quotation/<name>", "to_route": "request_for_quotation_detail"},
+	{"from_route": "/request_for_quotation_list/<name>", "to_route": "request_for_quotation_detail"},
     {"from_route": "/supplier_quotation_list/<name>", "to_route": "supplier_quotation_detail"}
 ]
 api_routes = [
