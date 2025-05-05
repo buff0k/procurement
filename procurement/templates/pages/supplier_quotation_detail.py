@@ -3,7 +3,7 @@
 
 import frappe
 from frappe import _
-from frappe.utils import formatdate
+from frappe.utils import formatdate, get_number_format_info
 
 def get_context(context):
     context.no_cache = 1
@@ -39,6 +39,9 @@ def get_context(context):
 
     # Title for the page
     context["title"] = context.doc.name
+
+    # Add currency symbol to context
+    context["currency_symbol"] = frappe.db.get_value("Currency", context.doc.currency, "symbol") or context.doc.currency
 
     # Safety check for missing item_code
     for item in context.doc.items:
