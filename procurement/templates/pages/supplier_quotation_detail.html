@@ -4,25 +4,30 @@
 <meta name="csrf_token" content="{{ csrf_token }}">
 <div id="quotation-container" data-doc="{{ doc.name | e }}">
     <h2>Supplier Quotation:</h2>
-    <h3>{{ doc.name }}</h3>
     <div>
-        <strong>Status:</strong> <span>{{ doc.status }}</span>
+        <strong>Our Reference Number:</strong> <span>{{ doc.name }}</span>
     </div>
-    
-    <!-- Editable Quotation Number -->
     <div>
-        <strong>Quotation Number:</strong>
-        <input id="quotation_number" class="form-control" type="text" value="{{ doc.quotation_number or '' }}" {% if not doc.has_permission('write') %}readonly{% endif %}>
+        <strong>Document Status:</strong> <span>{{ doc.status }}</span>
     </div>
-
+    <div>
+        <strong>Your Reference Number:</strong>
+        <input id="quotation_number" class="form-control" type="text" placeholder="Enter your own Internal Quotation Number Here" value="{{ doc.quotation_number or '' }}" {% if not doc.has_permission('write') %}readonly{% endif %}>
+    </div>
+    <div>
+        <h3>Welcome to your Quotation</h3>
+        <p>Here you can modify, update, change, save, submit, or delete any quotations, note that once a quotation is submitted, you will not be able to alter or amend it anymore.</p>
+        <p>If you delete a draft quotation here, it is not recoverable and you will need to create a new quotation for the specific RFQ</p>
+        <p>Editible fields include; Your Reference Number (If you have an internal Quotation Number you are using), Qty (Quantity, the number of units), Unit of Measure (The type of unit, i.e. hours, months, units, km, etc.), Rate (The Rate per Unit).</p>
+        <p>You can also upload attachments such as supporting documents, your formal quotation, etc.</p>
+    </div>
     <h3>Quotation Items</h3>
     <table id="items-table" class="table table-bordered">
         <thead>
             <tr>
-                <th>Item Code</th>
-                <th>Description</th>
-                <th>UOM</th>
+                <th>Item</th>
                 <th>Qty</th>
+                <th>Unit Of Measure</th>
                 <th>Rate</th>
                 <th>Subtotal</th>
             </tr>
@@ -30,8 +35,8 @@
         <tbody>
             {% for item in doc.items %}
             <tr data-item="{{ item.name }}">
-                <td>{{ item.item_code }}</td>
                 <td>{{ item.description }}</td>
+                <td><input class="qty" type="number" value="{{ item.qty }}"></td>
                 <td>
                     <select class="uom">
                         {% for uom in uoms %}
@@ -39,14 +44,13 @@
                         {% endfor %}
                     </select>
                 </td>
-                <td><input class="qty" type="number" value="{{ item.qty }}"></td>
                 <td><input class="rate" type="number" value="{{ item.rate }}"></td>
                 <td class="amount">{{ item.amount }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-
+    <div id="nett-total-wrapper" style="text-align: right; margin-top: 10px;"></div>
     <h3>Attachments</h3>
     <table id="attachments-table" class="table table-bordered">
         <thead>

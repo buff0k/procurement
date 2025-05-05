@@ -1,10 +1,44 @@
+// Copyright (c) 2025, Isambane Mining (Pty) Ltd and contributors
+// For license information, please see license.txt
+
 frappe.ready(() => {
     const quotationName = document.getElementById("quotation-container").dataset.doc;
+
+    const updateNettTotal = () => {
+        let nettTotal = 0;
+        document.querySelectorAll("#items-table tbody tr").forEach(row => {
+            const qty = parseFloat(row.querySelector(".qty").value) || 0;
+            const rate = parseFloat(row.querySelector(".rate").value) || 0;
+            const subtotal = qty * rate;
+            row.querySelector(".amount").textContent = subtotal.toFixed(2);
+            nettTotal += subtotal;
+        });
+    
+        // Update the text content of the Net Total element
+        const netTotalContainer = document.getElementById("nett-total-wrapper");
+        if (netTotalContainer) {
+            netTotalContainer.innerHTML = `
+                <strong>Net Total: ${nettTotal.toFixed(2)}</strong><br>
+                <em>(Excl. VAT)</em>
+            `;
+        }
+    };
+
+    // Initial calculation
+    updateNettTotal();
+
+    // Recalculate Nett Total on changes
+    document.querySelectorAll("#items-table").forEach(table => {
+        table.addEventListener("input", event => {
+            if (event.target.classList.contains("qty") || event.target.classList.contains("rate")) {
+                updateNettTotal();
+            }
+        });
+    });
 
     // Save Quotation
     document.getElementById("save-quotation").addEventListener("click", async () => {
         try {
-            // Step 1: Fetch full doc from the backend
             const r = await frappe.call({
                 method: "frappe.client.get",
                 args: {
@@ -17,37 +51,34 @@ frappe.ready(() => {
             doc.quotation_number = document.getElementById("quotation_number").value || "";
             doc.terms = document.getElementById("terms").value || "";
 
-            // Step 2: Build a map of updated values from the UI
             const updates = {};
             document.querySelectorAll("#items-table tbody tr").forEach(row => {
-                const itemCode = row.querySelector("td:nth-child(1)").textContent.trim();
+                const description = row.querySelector("td:nth-child(1)").textContent.trim();
                 const qty = parseFloat(row.querySelector(".qty").value) || 0;
                 const rate = parseFloat(row.querySelector(".rate").value) || 0;
                 const uom = row.querySelector(".uom").value;
-                if (itemCode) {
-                    updates[itemCode] = { qty, rate, uom };
+                if (description) {
+                    updates[description] = { qty, rate, uom };
                 }
             });
 
-            // Step 3: Merge updated fields into existing items
             doc.items.forEach(item => {
-                if (updates[item.item_code]) {
-                    const update = updates[item.item_code];
+                const key = item.description;
+                if (updates[key]) {
+                    const update = updates[key];
                     item.qty = update.qty;
                     item.rate = update.rate;
                     item.uom = update.uom;
-                    // Keep other fields (e.g. request_for_quotation) untouched
                 }
             });
 
-            // Step 4: Send merged doc to backend
             const saveRes = await frappe.call({
                 method: "procurement.api.patch_supplier_quotation",
                 args: {
                     name: quotationName,
                     quotation_number: doc.quotation_number,
                     terms: doc.terms,
-                    updated_items: doc.items  // Includes qty, rate, uom, item_code
+                    updated_items: doc.items
                 }
             });
 
@@ -96,94 +127,19 @@ frappe.ready(() => {
                 await frappe.call({
                     method: "procurement.api.add_attachment_to_supplier_quotation",
                     args: {
-                        quotation: quotationName,
+                        quotation_name: quotationName,
                         file_url: json.message.file_url,
                         description: description
                     }
                 });
-
-                frappe.msgprint("Attachment uploaded successfully");
+                frappe.msgprint("File uploaded and attached.");
                 location.reload();
             } else {
-                frappe.msgprint("Upload failed. Please try again.");
-                console.error(json);
+                frappe.msgprint("Failed to upload file.");
             }
         } catch (error) {
-            frappe.msgprint("Error uploading file.");
+            frappe.msgprint("File upload error.");
             console.error(error);
         }
-    });
-
-    // Delete Quotation
-    document.getElementById("delete-quotation").addEventListener("click", async () => {
-        if (!confirm("Are you sure you want to delete this quotation?")) return;
-
-        try {
-            await frappe.call({
-                method: "frappe.client.delete",
-                args: {
-                    doctype: "Supplier Quotation",
-                    name: quotationName
-                }
-            });
-
-            frappe.msgprint("Quotation deleted successfully");
-            window.location.href = "/supplier-quotations";
-        } catch (error) {
-            frappe.msgprint("Failed to delete quotation.");
-            console.error(error);
-        }
-    });
-
-    // Submit Quotation
-    document.getElementById("submit-quotation").addEventListener("click", () => {
-        frappe.confirm(
-            "Once submitted, the quotation is final and cannot be changed.<br><br><b>Do you want to continue?</b>",
-            async () => {
-                try {
-                    // First, fetch the full doc
-                    const r = await frappe.call({
-                        method: "frappe.client.get",
-                        args: {
-                            doctype: "Supplier Quotation",
-                            name: quotationName
-                        }
-                    });
-
-                    const doc = r.message;
-
-                    // Then submit it
-                    await frappe.call({
-                        method: "frappe.client.submit",
-                        args: { doc }
-                    });
-
-                    frappe.msgprint("Quotation submitted successfully.");
-                    location.reload();
-                } catch (error) {
-                    frappe.msgprint("Failed to submit quotation.");
-                    console.error(error);
-                }
-            },
-            () => {
-                frappe.msgprint("Submission cancelled.");
-            }
-        );
-    });
-
-    // Live Update of Amount on Qty or Rate Change
-    function updateAmountForRow(row) {
-        const qty = parseFloat(row.querySelector(".qty").value) || 0;
-        const rate = parseFloat(row.querySelector(".rate").value) || 0;
-        const amount = qty * rate;
-        row.querySelector(".amount").textContent = amount.toFixed(2);
-    }
-
-    document.querySelectorAll("#items-table tbody tr").forEach(row => {
-        const qtyInput = row.querySelector(".qty");
-        const rateInput = row.querySelector(".rate");
-
-        qtyInput.addEventListener("input", () => updateAmountForRow(row));
-        rateInput.addEventListener("input", () => updateAmountForRow(row));
     });
 });
