@@ -1299,7 +1299,7 @@
   "amend": 1,
   "cancel": 1,
   "create": 0,
-  "delete": 0,
+  "delete": 1,
   "docstatus": 0,
   "doctype": "Custom DocPerm",
   "email": 1,

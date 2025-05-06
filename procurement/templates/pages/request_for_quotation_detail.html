@@ -34,13 +34,16 @@
                     <div class="col-sm-5 col-12">
                         {{ _("Items") }}
                     </div>
-                    <div class="col-sm-2 col-4 text-right">
+                    <div class="col-sm-1 col-4 text-right">
                         {{ _("Qty") }}
+                    </div>
+                    <div class="col-sm-2 col-4 text-right">
+                        {{ _("UOM") }}
                     </div>
                     <div class="col-sm-2 col-4 text-right">
                         {{ _("Rate") }}
                     </div>
-                    <div class="col-sm-3 col-4 text-right">
+                    <div class="col-sm-2 col-4 text-right">
                         {{ _("Amount") }}
                     </div>
                 </div>
@@ -51,27 +54,39 @@
                     {% for d in doc.items %}
                     <div class="rfq-item">
                         <div class="row">
-                            <div class="col-sm-5 col-12" style="margin-bottom: 10px;margin-top: 5px;">
-                                <!-- Display item code and description -->
+                            <!-- Items -->
+                            <div class="col-sm-5 col-12" style="margin-bottom: 10px; margin-top: 5px;">
                                 <strong>{{ d.item_code }}</strong>
                                 {% if d.description %}
                                 <p class="text-muted small">{{ d.description }}</p>
                                 {% endif %}
                             </div>
-                            <div class="col-sm-2 col-4 text-right">
-                                <input type="text" class="form-control text-right rfq-qty" style="margin-top: 5px;display: inline-block"
-                                    value="{{ d.get_formatted('qty') }}"
-                                    data-idx="{{ d.idx }}">
-                                <p class="text-muted small" style="margin-top: 10px;">
-                                    {{ _("UOM") + ":"+ d.uom }}
-                                </p>
+                
+                            <!-- Qty -->
+                            <div class="col-sm-1 col-4 text-right">
+                                <input type="text" class="form-control text-right rfq-qty"
+                                       style="margin-top: 5px;" value="{{ d.get_formatted('qty') }}"
+                                       data-idx="{{ d.idx }}">
                             </div>
+                
+                            <!-- UOM (as dropdown) -->
+                            <div class="col-sm-2 col-4 text-right">
+                                <select class="form-control text-right rfq-uom" style="margin-top: 5px;" data-idx="{{ d.idx }}">
+                                    {% for uom in uoms %}
+                                    <option value="{{ uom.name }}" {% if uom.name == d.uom %}selected{% endif %}>{{ uom.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                
+                            <!-- Rate -->
                             <div class="col-sm-2 col-4 text-right">
                                 <input type="text" class="form-control text-right rfq-rate"
-                                    style="margin-top: 5px;display: inline-block" value="0.00"
-                                    data-idx="{{ d.idx }}">
+                                       style="margin-top: 5px;" value="0.00"
+                                       data-idx="{{ d.idx }}">
                             </div>
-                            <div class="col-sm-3 col-4 text-right" style="padding-top: 9px;">
+                
+                            <!-- Amount -->
+                            <div class="col-sm-2 col-4 text-right" style="padding-top: 9px;">
                                 {{ doc.currency_symbol }} <span class="rfq-amount" data-idx="{{ d.idx }}">0.00</span>
                             </div>
                         </div>
@@ -93,9 +108,15 @@
             <div class="row terms">
                 <div class="col-6">
                     <br><br>
-                    <p class="text-muted small">{{ _("Notes: ") }}</p>
+                    <p class="text-muted small">{{ _("Notes or Comments: ") }}</p>
                     <textarea class="form-control terms-feedback" style="height: 100px;"></textarea>
                 </div>
+            </div>
+
+            <div class="mt-3">
+                {% if doc.items %}
+                <button id="make-quotation" class="btn btn-primary btn-sm">Make Quotation</button>
+                {% endif %}
             </div>
     
             <div class="row mt-5">
@@ -122,12 +143,6 @@
                     </div>
                     {% endif %}
                 </div>
-            </div>
-    
-            <div class="mt-3">
-                {% if doc.items %}
-                <button id="make-quotation" class="btn btn-primary btn-sm">Make Quotation</button>
-                {% endif %}
             </div>
         </div>
     </div>

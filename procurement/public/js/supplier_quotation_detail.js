@@ -92,6 +92,65 @@ frappe.ready(() => {
         }
     });
 
+    // Submit Quotation
+    document.getElementById("submit-quotation").addEventListener("click", () => {
+        frappe.confirm(
+            "Are you sure you want to submit this quotation? <br><br><strong>Once submitted, it can no longer be amended.</strong>",
+            async () => {
+                try {
+                    const { message: doc } = await frappe.call({
+                        method: "frappe.client.get",
+                        args: {
+                            doctype: "Supplier Quotation",
+                            name: quotationName
+                        }
+                    });
+    
+                    await frappe.call({
+                        method: "frappe.client.submit",
+                        args: {
+                            doc: doc
+                        }
+                    });
+                    frappe.msgprint("Quotation submitted successfully.");
+                    location.reload();
+                } catch (error) {
+                    frappe.msgprint("Failed to submit quotation.");
+                    console.error(error);
+                }
+            },
+            () => {
+                frappe.msgprint("Submission cancelled.");
+            }
+        );
+    });        
+
+    // Delete Quotation
+    document.getElementById("delete-quotation").addEventListener("click", () => {
+        frappe.confirm(
+            "Are you sure you want to <strong>permanently delete</strong> this quotation?",
+            async () => {
+                try {
+                    await frappe.call({
+                        method: "frappe.client.delete",
+                        args: {
+                            doctype: "Supplier Quotation",
+                            name: quotationName
+                        }
+                    });
+                    frappe.msgprint("Quotation deleted successfully.");
+                    window.location.href = "/supplier_quotation_list";
+                } catch (error) {
+                    frappe.msgprint("Failed to delete quotation.");
+                    console.error(error);
+                }
+            },
+            () => {
+                frappe.msgprint("Deletion cancelled.");
+            }
+        );
+    });    
+
     // Upload Attachment
     document.getElementById("upload-attachment").addEventListener("click", async () => {
         const fileInput = document.getElementById("new-attachment");
@@ -127,7 +186,7 @@ frappe.ready(() => {
                 await frappe.call({
                     method: "procurement.api.add_attachment_to_supplier_quotation",
                     args: {
-                        quotation_name: quotationName,
+                        quotation: quotationName,
                         file_url: json.message.file_url,
                         description: description
                     }

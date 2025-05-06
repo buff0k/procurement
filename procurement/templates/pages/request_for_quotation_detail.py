@@ -29,6 +29,7 @@ def get_context(context):
 	unauthorized_user(context.doc.supplier)
 	update_supplier_details(context)
 	context["title"] = frappe.form_dict.name
+	context.uoms = frappe.get_all("UOM", fields=["name"])
 
 	# BuFf0k = Fetch custom_details_about_rfq_boq_etc field and include it in the context
 	context.custom_details_about_rfq_boq_etc = process_rfq_images(context.doc.custom_details_about_rfq_boq_etc)

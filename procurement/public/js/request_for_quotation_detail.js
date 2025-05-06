@@ -61,6 +61,23 @@ rfq = class rfq {
 
 	submit_rfq(){
 		$(document).on("click", ".btn-sm", function(){
+			// Update doc.items with the latest values from the form
+			if (doc && doc.items) {
+				doc.items.forEach(item => {
+					const idx = item.idx;
+	
+					// Get updated qty, rate, and uom from the DOM
+					const qty = $(`.rfq-qty[data-idx="${idx}"]`).val();
+					const rate = $(`.rfq-rate[data-idx="${idx}"]`).val();
+					const uom = $(`.rfq-uom[data-idx="${idx}"]`).val();
+	
+					// Update item
+					item.qty = parseFloat(qty || item.qty);
+					item.rate = parseFloat(rate || 0);
+					item.uom = uom || item.uom;
+				});
+			}
+	
 			frappe.freeze();
 			frappe.call({
 				type: "POST",
