@@ -23,35 +23,77 @@
         <span>Note, all prices are Exclusive of Taxes and in:</span> <strong>{{ doc.currency }}</strong>
     </div>
     <h3>Quotation Items</h3>
-    <table id="items-table" class="table table-bordered" style="table-layout: fixed; width: 100%;">
-        <thead>
-            <tr>
-                <th style="width: 40%;">Item</th>
-                <th style="width: 10%;">Qty</th>
-                <th style="width: 20%;">Unit Of Measure</th>
-                <th style="width: 15%;">Rate</th>
-                <th style="width: 15%;">Subtotal</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in doc.items %}
-            <tr data-item="{{ item.name }}">
-                <td style="word-wrap: break-word; white-space: normal;">{{ item.description }}</td>
-                <td><input class="qty" type="number" value="{{ item.qty }}" style="width: 100%;"></td>
-                <td>
-                    <select class="uom" style="width: 100%;">
+    <div class="row cart-item-header">
+        <div class="col-sm-5 col-12">
+            {{ _("Item") }}
+        </div>
+        <div class="col-sm-1 col-4 text-right">
+            {{ _("Qty") }}
+        </div>
+        <div class="col-sm-2 col-4 text-right">
+            {{ _("UOM") }}
+        </div>
+        <div class="col-sm-2 col-4 text-right">
+            {{ _("Rate") }}
+        </div>
+        <div class="col-sm-2 col-4 text-right">
+            {{ _("Subtotal") }}
+        </div>
+    </div>
+    <hr>
+    {% if doc.items %}
+    <div class="quotation-items">
+        {% for item in doc.items %}
+        <div class="quotation-item" data-item="{{ item.name }}">
+            <div class="row">
+                <!-- Item Description -->
+                <div class="col-sm-5 col-12" style="margin-bottom: 10px; margin-top: 5px;">
+                    <strong>{{ item.item_code }}</strong>
+                    {% if item.description %}
+                    <p class="text-muted small">{{ item.description }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Qty -->
+                <div class="col-sm-1 col-4 text-right">
+                    <input type="number" class="form-control text-right qty"
+                           style="margin-top: 5px;" value="{{ item.qty }}">
+                </div>
+
+                <!-- UOM -->
+                <div class="col-sm-2 col-4 text-right">
+                    <select class="form-control text-right uom" style="margin-top: 5px;">
                         {% for uom in uoms %}
-                            <option value="{{ uom.name }}" {% if uom.name == item.uom %}selected{% endif %}>{{ uom.name }}</option>
+                        <option value="{{ uom.name }}" {% if uom.name == item.uom %}selected{% endif %}>
+                            {{ uom.name }}
+                        </option>
                         {% endfor %}
                     </select>
-                </td>
-                <td><input class="rate" type="number" value="{{ item.rate }}" style="width: 100%;"></td>
-                <td class="amount">{{ item.amount }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <div id="nett-total-wrapper" style="text-align: right; margin-top: 10px;"></div>
+                </div>
+
+                <!-- Rate -->
+                <div class="col-sm-2 col-4 text-right">
+                    <input type="number" class="form-control text-right rate"
+                           style="margin-top: 5px;" value="{{ item.rate }}">
+                </div>
+
+                <!-- Amount -->
+                <div class="col-sm-2 col-4 text-right" style="padding-top: 9px;">
+                    {{ doc.currency_symbol or "€" }} <span class="amount">{{ item.amount }}</span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% if doc.items %}
+    <div class="row grand-total-row" style="margin-top: 10px;">
+        <div class="col-9 text-right"><strong>{{ _("Total") }}</strong></div>
+        <div class="col-3 text-right">
+            {{ doc.currency_symbol or "€" }} <strong><span id="nett-total">0.00</span></strong>
+        </div>
+    </div>
+    {% endif %}
     <h3>Attachments</h3>
     <table id="attachments-table" class="table table-bordered">
         <thead>

@@ -6,35 +6,31 @@ frappe.ready(() => {
 
     const updateNettTotal = () => {
         let nettTotal = 0;
-        document.querySelectorAll("#items-table tbody tr").forEach(row => {
-            const qty = parseFloat(row.querySelector(".qty").value) || 0;
-            const rate = parseFloat(row.querySelector(".rate").value) || 0;
+        document.querySelectorAll(".quotation-item").forEach(itemRow => {
+            const qty = parseFloat(itemRow.querySelector(".qty")?.value) || 0;
+            const rate = parseFloat(itemRow.querySelector(".rate")?.value) || 0;
             const subtotal = qty * rate;
-            row.querySelector(".amount").textContent = subtotal.toFixed(2);
+            itemRow.querySelector(".amount").textContent = subtotal.toFixed(2);
             nettTotal += subtotal;
         });
     
-        // Update the text content of the Net Total element
-        const netTotalContainer = document.getElementById("nett-total-wrapper");
-        if (netTotalContainer) {
-            netTotalContainer.innerHTML = `
-                <strong>Net Total: ${nettTotal.toFixed(2)}</strong><br>
-                <em>(Excl. VAT)</em>
-            `;
+        const nettTotalSpan = document.getElementById("nett-total");
+        if (nettTotalSpan) {
+            nettTotalSpan.textContent = nettTotal.toFixed(2);
         }
-    };
+    };    
 
     // Initial calculation
     updateNettTotal();
 
     // Recalculate Nett Total on changes
-    document.querySelectorAll("#items-table").forEach(table => {
-        table.addEventListener("input", event => {
+    document.querySelectorAll(".quotation-item").forEach(itemRow => {
+        itemRow.addEventListener("input", event => {
             if (event.target.classList.contains("qty") || event.target.classList.contains("rate")) {
                 updateNettTotal();
             }
         });
-    });
+    });    
 
     // Save Quotation
     document.getElementById("save-quotation").addEventListener("click", async () => {
@@ -52,23 +48,20 @@ frappe.ready(() => {
             doc.terms = document.getElementById("terms").value || "";
 
             const updates = {};
-            document.querySelectorAll("#items-table tbody tr").forEach(row => {
-                const description = row.querySelector("td:nth-child(1)").textContent.trim();
-                const qty = parseFloat(row.querySelector(".qty").value) || 0;
-                const rate = parseFloat(row.querySelector(".rate").value) || 0;
-                const uom = row.querySelector(".uom").value;
-                if (description) {
-                    updates[description] = { qty, rate, uom };
+            document.querySelectorAll(".quotation-item").forEach(row => {
+                const itemName = row.dataset.item;
+                const qty = parseFloat(row.querySelector(".qty")?.value) || 0;
+                const rate = parseFloat(row.querySelector(".rate")?.value) || 0;
+                const uom = row.querySelector(".uom")?.value;
+            
+                if (itemName) {
+                    updates[itemName] = { qty, rate, uom };
                 }
-            });
+            });            
 
             doc.items.forEach(item => {
-                const key = item.description;
-                if (updates[key]) {
-                    const update = updates[key];
-                    item.qty = update.qty;
-                    item.rate = update.rate;
-                    item.uom = update.uom;
+                if (updates[item.name]) {
+                    Object.assign(item, updates[item.name]);
                 }
             });
 
