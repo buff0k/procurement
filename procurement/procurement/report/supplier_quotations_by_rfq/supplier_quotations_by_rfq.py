@@ -52,10 +52,11 @@ def get_columns(filters):
             {"fieldname": f"{item}_total", "label": f"{item} Total Price", "fieldtype": "Currency", "width": 120},
         ])
 
-    # Add the Total and Notes columns at the end
+    # Add the Total, Notes, and Attachments columns at the end
     columns.extend([
         {"fieldname": "total_amount", "label": "Total", "fieldtype": "Currency", "width": 150},
-        {"fieldname": "terms", "label": "Notes", "fieldtype": "Data", "width": 300}
+        {"fieldname": "terms", "label": "Notes", "fieldtype": "Data", "width": 300},
+        {"fieldname": "attachment_links", "label": "Attachments", "fieldtype": "HTML", "width": 300}
     ])
 
     return columns
@@ -97,7 +98,7 @@ def get_data(filters):
 
     # Step 5: Initialize suppliers with submitted Supplier Quotations
     submitted_suppliers = set()
-    
+
     for sq in supplier_quotations:
         supplier_details = frappe.get_value(
             "Supplier",
@@ -106,6 +107,7 @@ def get_data(filters):
             as_dict=True
         )
 
+        # Initialize the data row
         supplier_map[sq.name] = {
             "supplier_quotation": sq.name,
             "supplier_name": sq.supplier,
@@ -117,6 +119,25 @@ def get_data(filters):
         }
 
         submitted_suppliers.add(sq.supplier)  # Track submitted suppliers
+
+        # Fetch attachments for this Supplier Quotation
+        attachments = frappe.get_all(
+            "Supplier Quotation Attachment",
+            filters={"parent": sq.name},
+            fields=["file_url", "description"]
+        )
+
+        links = []
+        for att in attachments:
+            if att.file_url and att.description:
+                desc = frappe.utils.escape_html(att.description)
+                url = frappe.utils.escape_html(att.file_url)
+                links.append(f'<a href="{url}" target="_blank">{desc}</a>')
+            elif att.file_url:
+                url = frappe.utils.escape_html(att.file_url)
+                links.append(f'<a href="{url}" target="_blank">{url}</a>')
+
+        supplier_map[sq.name]["attachment_links"] = ", ".join(links)
 
     # Step 6: Populate item data
     for item in sq_items:
@@ -144,7 +165,8 @@ def get_data(filters):
                 "mobile_no": supplier_details.get("mobile_no"),
                 "email_id": supplier_details.get("email_id"),
                 "total_amount": 0,
-                "terms": ""  # No terms
+                "terms": "",
+                "attachment_links": ""
             }
 
     # Step 8: Convert dictionary to list format for the report

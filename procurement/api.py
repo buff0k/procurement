@@ -236,3 +236,5 @@ def patch_supplier_quotation(name, quotation_number=None, terms=None, updated_it
 
     doc.save()
     return True
+
+import frappe
