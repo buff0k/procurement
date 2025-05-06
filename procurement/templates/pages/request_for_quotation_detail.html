@@ -3,126 +3,132 @@
 {% block page_content %}
 <div id="rfq-container">
     <h2>Request for Quotation</h2>
-    <div class="row">
-        <div class="col-6">
-            <div class="rfq-supplier">{{ doc.supplier }}</div>
-        </div>
-        <div class="col-6 text-muted text-right h6">
-            {{ doc.get_formatted("transaction_date") }}
-        </div>
-        <div>
-            <strong>{{ doc.name }}</strong>
-        </div>
+    <div>
+        <strong>Our Reference:</strong> <span>{{ doc.name }}</span>
     </div>
-</div>
-
-{% if custom_details_about_rfq_boq_etc %}
-<div class="rfq-custom-details" style="margin-top: 20px; padding: 15px; border: 1px solid #ccc;">
-    {{ custom_details_about_rfq_boq_etc | safe }}
-</div>
-{% endif %}
-
-<div class="rfq-content" style="margin-top:15px">
-    <div id="order-container">
-        <div id="rfq-items">
-            <div class="row cart-item-header">
-                <div class="col-sm-5 col-12">
-                    {{ _("Items") }}
-                </div>
-                <div class="col-sm-2 col-4 text-right">
-                    {{ _("Qty") }}
-                </div>
-                <div class="col-sm-2 col-4 text-right">
-                    {{ _("Rate") }}
-                </div>
-                <div class="col-sm-3 col-4 text-right">
-                    {{ _("Amount") }}
-                </div>
-            </div>
-            <hr>
-
-            {% if doc.items %}
-            <div class="rfq-items">
-                {% for d in doc.items %}
-                <div class="rfq-item">
-                    <div class="row">
-                        <div class="col-sm-5 col-12" style="margin-bottom: 10px;margin-top: 5px;">
-                            <!-- Display item code and description -->
-                            <strong>{{ d.item_code }}</strong>
-                            {% if d.description %}
-                            <p class="text-muted small">{{ d.description }}</p>
-                            {% endif %}
-                        </div>
-                        <div class="col-sm-2 col-4 text-right">
-                            <input type="text" class="form-control text-right rfq-qty" style="margin-top: 5px;display: inline-block"
-                                value="{{ d.get_formatted('qty') }}"
-                                data-idx="{{ d.idx }}">
-                            <p class="text-muted small" style="margin-top: 10px;">
-                                {{ _("UOM") + ":"+ d.uom }}
-                            </p>
-                        </div>
-                        <div class="col-sm-2 col-4 text-right">
-                            <input type="text" class="form-control text-right rfq-rate"
-                                style="margin-top: 5px;display: inline-block" value="0.00"
-                                data-idx="{{ d.idx }}">
-                        </div>
-                        <div class="col-sm-3 col-4 text-right" style="padding-top: 9px;">
-                            {{ doc.currency_symbol }} <span class="rfq-amount" data-idx="{{ d.idx }}">0.00</span>
-                        </div>
+    <div>
+        <strong>Supplier:</strong> <span>{{ doc.supplier }}</span>
+    </div>
+    <div>
+        <strong>RFQ Opening Date:</strong> <span>{{ doc.get_formatted("transaction_date") }}</span>
+    </div>
+    <div>
+        <strong>RFQ Closing Date:</strong> <span>{{ doc.get_formatted("schedule_date") }}</span>
+    </div>
+    {% if custom_details_about_rfq_boq_etc %}
+    <div class="rfq-custom-details">
+        <h3>RFQ Details (Including BOQs)</h3>
+        {{ custom_details_about_rfq_boq_etc | safe }}
+    </div>
+    {% endif %}
+    <div>
+        <h3>Form Description:</h3>
+        <p>Here you can enter initial pricing and create quotations, which you will be able to edit, delete or submit.</p>
+        <p>Editible fields include: Qty (Quantity, the number of units), Unit of Measure (The measurement unit, i.e. hours, months, units, km, etc.), Rate (The Rate per Unit, if Unit of Measure is Hours, then the number of hours quoted on), and Notes (A brief summary of any specific points or terms you need to include).</p>
+        <span>Note, all prices are Exclusive of Taxes and in:</span> <strong>{{ doc.currency }}</strong>
+    </div>
+    <div class="rfq-content" style="margin-top:15px">
+        <div id="order-container">
+            <div id="rfq-items">
+                <div class="row cart-item-header">
+                    <div class="col-sm-5 col-12">
+                        {{ _("Items") }}
+                    </div>
+                    <div class="col-sm-2 col-4 text-right">
+                        {{ _("Qty") }}
+                    </div>
+                    <div class="col-sm-2 col-4 text-right">
+                        {{ _("Rate") }}
+                    </div>
+                    <div class="col-sm-3 col-4 text-right">
+                        {{ _("Amount") }}
                     </div>
                 </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-        </div>
-
-        {% if doc.items %}
-        <div class="row grand-total-row">
-            <div class="col-9 text-right">{{ _("Grand Total") }}</div>
-            <div class="col-3 text-right">
-                {{ doc.currency_symbol }} <span class="tax-grand-total">0.0</span>
-            </div>
-        </div>
-        {% endif %}
-
-        <div class="row terms">
-            <div class="col-6">
-                <br><br>
-                <p class="text-muted small">{{ _("Notes: ") }}</p>
-                <textarea class="form-control terms-feedback" style="height: 100px;"></textarea>
-            </div>
-        </div>
-
-        <div class="row mt-5">
-            <div class="col-12">
-                <p class="text-muted small">{{ _("Quotations: ") }}</p>
-                {% if doc.rfq_links %}
-                <div class="result">
-                    {% for d in doc.rfq_links %}
-                    <div class="web-list-item transaction-list-item quotations" idx="{{ d.name }}">
+                <hr>
+    
+                {% if doc.items %}
+                <div class="rfq-items">
+                    {% for d in doc.items %}
+                    <div class="rfq-item">
                         <div class="row">
-                            <div class="col-sm-6">
-                                <span class="indicator gray">{{ d.name }}</span>
+                            <div class="col-sm-5 col-12" style="margin-bottom: 10px;margin-top: 5px;">
+                                <!-- Display item code and description -->
+                                <strong>{{ d.item_code }}</strong>
+                                {% if d.description %}
+                                <p class="text-muted small">{{ d.description }}</p>
+                                {% endif %}
                             </div>
-                            <div class="col-sm-3">
-                                <span class="small gray">{{ d.status }}</span>
+                            <div class="col-sm-2 col-4 text-right">
+                                <input type="text" class="form-control text-right rfq-qty" style="margin-top: 5px;display: inline-block"
+                                    value="{{ d.get_formatted('qty') }}"
+                                    data-idx="{{ d.idx }}">
+                                <p class="text-muted small" style="margin-top: 10px;">
+                                    {{ _("UOM") + ":"+ d.uom }}
+                                </p>
                             </div>
-                            <div class="col-sm-3">
-                                <span class="small gray">{{ d.transaction_date }}</span>
+                            <div class="col-sm-2 col-4 text-right">
+                                <input type="text" class="form-control text-right rfq-rate"
+                                    style="margin-top: 5px;display: inline-block" value="0.00"
+                                    data-idx="{{ d.idx }}">
+                            </div>
+                            <div class="col-sm-3 col-4 text-right" style="padding-top: 9px;">
+                                {{ doc.currency_symbol }} <span class="rfq-amount" data-idx="{{ d.idx }}">0.00</span>
                             </div>
                         </div>
-                        <a class="transaction-item-link" href="/supplier_quotation_list/{{ d.name }}">Link</a>
                     </div>
                     {% endfor %}
                 </div>
                 {% endif %}
             </div>
-        </div>
-
-        <div class="mt-3">
+    
             {% if doc.items %}
-            <button id="make-quotation" class="btn btn-primary btn-sm">Make Quotation</button>
+            <div class="row grand-total-row">
+                <div class="col-9 text-right">{{ _("Grand Total") }}</div>
+                <div class="col-3 text-right">
+                    {{ doc.currency_symbol }} <span class="tax-grand-total">0.0</span>
+                </div>
+            </div>
             {% endif %}
+    
+            <div class="row terms">
+                <div class="col-6">
+                    <br><br>
+                    <p class="text-muted small">{{ _("Notes: ") }}</p>
+                    <textarea class="form-control terms-feedback" style="height: 100px;"></textarea>
+                </div>
+            </div>
+    
+            <div class="row mt-5">
+                <div class="col-12">
+                    <p class="text-muted small">{{ _("Quotations: ") }}</p>
+                    {% if doc.rfq_links %}
+                    <div class="result">
+                        {% for d in doc.rfq_links %}
+                        <div class="web-list-item transaction-list-item quotations" idx="{{ d.name }}">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <span class="indicator gray">{{ d.name }}</span>
+                                </div>
+                                <div class="col-sm-3">
+                                    <span class="small gray">{{ d.status }}</span>
+                                </div>
+                                <div class="col-sm-3">
+                                    <span class="small gray">{{ d.transaction_date }}</span>
+                                </div>
+                            </div>
+                            <a class="transaction-item-link" href="/supplier_quotation_list/{{ d.name }}">Link</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+    
+            <div class="mt-3">
+                {% if doc.items %}
+                <button id="make-quotation" class="btn btn-primary btn-sm">Make Quotation</button>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>
