@@ -23,7 +23,7 @@ fixtures = [
 ]
 website_route_rules = [
 	{"from_route": "/request_for_quotation_list/<name>", "to_route": "request_for_quotation_detail"},
-    {"from_route": "/supplier_quotation_list/<name>", "to_route": "supplier_quotation_detail"}
+	{"from_route": "/supplier_quotation_list/<name>", "to_route": "supplier_quotation_detail"}
 ]
 api_routes = [
 	{"from_route": "/api/method/procurement.api.get_rfq_image", "to_route": "procurement.api.get_rfq_image"}
