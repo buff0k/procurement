@@ -12,7 +12,7 @@
     </div>
     <div>
         <strong>Your Reference Number:</strong>
-        <input id="quotation_number" class="form-control" type="text" placeholder="Enter your own Internal Quotation Number Here" value="{{ doc.quotation_number or '' }}" {% if not doc.has_permission('write') %}readonly{% endif %}>
+        <input id="quotation_number" class="form-control" type="text" placeholder="Enter your own Internal Quotation Number Here" value="{{ doc.quotation_number or '' }}" {% if not doc.has_permission('write') or doc.status == "Submitted" %}readonly{% endif %}>
     </div>
     <div>
         <h3>Form Description:</h3>
@@ -55,12 +55,11 @@
                 </div>
                 <!-- Qty -->
                 <div class="col-sm-1 col-4 text-right">
-                    <input type="number" class="form-control text-right qty"
-                           style="margin-top: 5px;" value="{{ item.qty }}">
+                    <input type="number" class="form-control text-right qty" style="margin-top: 5px;" value="{{ item.qty }}" {% if doc.status == "Submitted" %}readonly{% endif %}>
                 </div>
                 <!-- UOM -->
                 <div class="col-sm-2 col-4 text-right">
-                    <select class="form-control text-right uom" style="margin-top: 5px;">
+                    <select class="form-control text-right uom" style="margin-top: 5px;" {% if doc.status == "Submitted" %}disabled{% endif %}>
                         {% for uom in uoms %}
                         <option value="{{ uom.name }}" {% if uom.name == item.uom %}selected{% endif %}>
                             {{ uom.name }}
@@ -70,8 +69,7 @@
                 </div>
                 <!-- Rate -->
                 <div class="col-sm-2 col-4 text-right">
-                    <input type="number" class="form-control text-right rate"
-                           style="margin-top: 5px;" value="{{ item.rate }}">
+                    <input type="number" class="form-control text-right rate" style="margin-top: 5px;" value="{{ item.rate }}" {% if doc.status == "Submitted" %}readonly{% endif %}>
                 </div>
                 <!-- Amount -->
                 <div class="col-sm-2 col-4 text-right" style="padding-top: 9px;">
@@ -129,7 +127,7 @@
     </div>
     {% endif %}
     <h4>Notes or Comments</h4>
-    <textarea id="terms" rows="5" class="form-control">{{ doc.terms | striptags }}</textarea>
+    <textarea id="terms" rows="5" class="form-control" {% if doc.status == "Submitted" %}readonly{% endif %}>{{ doc.terms | striptags }}</textarea>
     {% if doc.status != "Submitted" %}
     <div class="mt-3">
         <button id="save-quotation" class="btn btn-primary">Save</button>
