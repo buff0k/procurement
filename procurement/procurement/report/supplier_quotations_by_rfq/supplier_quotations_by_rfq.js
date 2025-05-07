@@ -2,21 +2,20 @@
 // For license information, please see license.txt
 
 frappe.query_reports["Supplier Quotations by RFQ"] = {
-    "filters": [
+    filters: [
         {
-            "fieldname": "request_for_quotation",
-            "label": "Request for Quotation",
-            "fieldtype": "Link",
-            "options": "Request for Quotation",
-            "reqd": 1,
-            "on_change": function () {
+            fieldname: "request_for_quotation",
+            label: "Request for Quotation",
+            fieldtype: "Link",
+            options: "Request for Quotation",
+            reqd: 1,
+            on_change: function () {
                 let rfq = frappe.query_report.get_filter_value("request_for_quotation");
                 if (rfq) {
+                    // Load metadata and inject UI
                     frappe.call({
                         method: "procurement.procurement.report.supplier_quotations_by_rfq.supplier_quotations_by_rfq.get_rfq_metadata",
-                        args: {
-                            rfq: rfq
-                        },
+                        args: { rfq },
                         callback: function (r) {
                             if (r.message) {
                                 const html = `
@@ -26,14 +25,11 @@ frappe.query_reports["Supplier Quotations by RFQ"] = {
                                         <strong>Items:</strong> ${r.message.item_names.join(", ")}
                                     </div>
                                 `;
-
-                                // Cleanup previous info box
+                                // Remove any existing info box
                                 $(frappe.query_report.page.main).find('.rfq-info-box').remove();
-
-                                // Inject safely into report page container
                                 $(frappe.query_report.page.main).prepend(html);
 
-                                // Refresh the report
+                                // Manually refresh the report
                                 frappe.query_report.refresh();
                             }
                         }
@@ -44,11 +40,13 @@ frappe.query_reports["Supplier Quotations by RFQ"] = {
     ],
 
     onload: function (report) {
-        // Clean up any lingering boxes on reload
+        // Clean up any injected boxes on reload
         $(report.page.main).find('.rfq-info-box').remove();
 
-        report.page.add_inner_button(__('Refresh'), function () {
-            report.refresh();
+        // Add manual refresh button
+        report.page.add_inner_button(__('Run Report'), function () {
+            frappe.query_report.refresh();
         });
     }
 };
+
