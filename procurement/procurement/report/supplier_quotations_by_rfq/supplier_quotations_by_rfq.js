@@ -19,7 +19,8 @@ frappe.query_reports["Supplier Quotations by RFQ"] = {
                         callback: function (r) {
                             if (r.message) {
                                 const html = `
-                                    <div class="rfq-info-box" style="margin: 15px 0; padding: 10px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 6px;">
+                                    <div class="rfq-info-box" style="margin: 15px 0; padding: 10px; border: 1px solid; border-radius: 6px;">
+                                        <strong>Ruequest for Quotation Details</strong><br>
                                         <strong>Required By:</strong> ${frappe.datetime.str_to_user(r.message.schedule_date)}<br>
                                         <strong>Local Community Procurement:</strong> ${r.message.custom_local_community_procurement || "N/A"}<br>
                                         <strong>Items:</strong> ${r.message.item_names.join(", ")}
