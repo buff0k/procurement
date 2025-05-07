@@ -73,7 +73,7 @@
                 </div>
                 <!-- Amount -->
                 <div class="col-sm-2 col-4 text-right" style="padding-top: 9px;">
-                    {{ doc.currency_symbol or "€" }} <span class="amount">{{ item.amount }}</span>
+                    {{ doc.currency_symbol or "R" }} <span class="amount">{{ item.amount }}</span>
                 </div>
             </div>
         </div>
@@ -84,7 +84,7 @@
     <div class="row grand-total-row" style="margin-top: 10px;">
         <div class="col-9 text-right"><strong>{{ _("Total") }}</strong></div>
         <div class="col-3 text-right">
-            {{ doc.currency_symbol or "€" }} <strong><span id="nett-total">0.00</span></strong>
+            {{ doc.currency_symbol or "R" }} <strong><span id="nett-total">0.00</span></strong>
         </div>
     </div>
     {% endif %}
