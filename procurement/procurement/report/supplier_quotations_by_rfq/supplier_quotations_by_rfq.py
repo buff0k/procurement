@@ -137,7 +137,7 @@ def get_data(filters):
                 url = frappe.utils.escape_html(att.file_url)
                 links.append(f'<a href="{url}" target="_blank">{url}</a>')
 
-        supplier_map[sq.name]["attachment_links"] = ", ".join(links)
+        supplier_map[sq.name]["attachment_links"] = " ".join(links)
 
     # Step 6: Populate item data
     for item in sq_items:
