@@ -53,13 +53,11 @@
                     <p class="text-muted small">{{ item.description }}</p>
                     {% endif %}
                 </div>
-
                 <!-- Qty -->
                 <div class="col-sm-1 col-4 text-right">
                     <input type="number" class="form-control text-right qty"
                            style="margin-top: 5px;" value="{{ item.qty }}">
                 </div>
-
                 <!-- UOM -->
                 <div class="col-sm-2 col-4 text-right">
                     <select class="form-control text-right uom" style="margin-top: 5px;">
@@ -70,13 +68,11 @@
                         {% endfor %}
                     </select>
                 </div>
-
                 <!-- Rate -->
                 <div class="col-sm-2 col-4 text-right">
                     <input type="number" class="form-control text-right rate"
                            style="margin-top: 5px;" value="{{ item.rate }}">
                 </div>
-
                 <!-- Amount -->
                 <div class="col-sm-2 col-4 text-right" style="padding-top: 9px;">
                     {{ doc.currency_symbol or "€" }} <span class="amount">{{ item.amount }}</span>
@@ -95,23 +91,34 @@
     </div>
     {% endif %}
     <h3>Attachments</h3>
-    <table id="attachments-table" class="table table-bordered">
-        <thead>
-            <tr>
-                <th>File</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for attachment in custom_attachments %}
-            <tr>
-                <td><a href="{{ attachment.file_url }}" target="_blank">Download</a></td>
-                <td>{{ attachment.description }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+    <!-- Attachment Header -->
+    <div class="row cart-item-header mt-4">
+        <div class="col-sm-6 col-12">
+            {{ _("File") }}
+        </div>
+        <div class="col-sm-6 col-12">
+            {{ _("Description") }}
+        </div>
+    </div>
+    <hr>
+    {% if custom_attachments %}
+    <div class="attachment-items">
+        {% for attachment in custom_attachments %}
+        <div class="row mb-3" data-attachment="{{ attachment.name }}">
+            <!-- File Download -->
+            <div class="col-sm-6 col-12">
+                <a href="{{ attachment.file_url }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-download"></i> {{ _("Download") }}
+                </a>
+            </div>
+            <!-- Description -->
+            <div class="col-sm-6 col-12">
+                {{ attachment.description }}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
     <!-- File upload input -->
     {% if doc.status != "Submitted" %}
     <div>
@@ -121,7 +128,6 @@
         <button type="button" id="upload-attachment" class="btn btn-success mt-2">Upload</button>
     </div>
     {% endif %}
-
     <h4>Notes or Comments</h4>
     <textarea id="terms" rows="5" class="form-control">{{ doc.terms | striptags }}</textarea>
     {% if doc.status != "Submitted" %}
