@@ -173,3 +173,12 @@ def get_data(filters):
     data = list(supplier_map.values())
 
     return data
+
+@frappe.whitelist()
+def get_rfq_metadata(rfq):
+    doc = frappe.get_doc("Request for Quotation", rfq)
+    return {
+        "schedule_date": doc.schedule_date,
+        "custom_local_community_procurement": doc.custom_local_community_procurement,
+        "item_names": [item.item_name for item in doc.items]
+    }
