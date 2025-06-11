@@ -20,6 +20,7 @@ add_to_apps_screen = [
 fixtures = [
 	{"dt": "Role", "filters": [["name", "in", ["Procurement Admin",	"Procurement User", "Procurement Manager"]]]}, 
 	{"dt": "Custom DocPerm", "filters": [["role", "in", ["Procurement Admin", "Procurement User", "Procurement Manager", "Supplier"]]]},
+	{"dt": "Client Script", "filters": [["name", "in", ["Auto Populate ESD Suppliers"]]]}
 ]
 website_route_rules = [
 	{"from_route": "/request_for_quotation_list/<name>", "to_route": "request_for_quotation_detail"},

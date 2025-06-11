@@ -30,6 +30,7 @@ def get_columns(filters):
     columns = [
         {"fieldname": "supplier_quotation", "label": "Supplier Quotation", "fieldtype": "Link", "options": "Supplier Quotation", "width": 150},
         {"fieldname": "supplier_name", "label": "Supplier", "fieldtype": "Link", "options": "Supplier", "width": 150},
+        {"fieldname": "supplier_primary_contact", "label": "Contact", "fieldtype": "Link", "options": "Contact", "width": 150},
         {"fieldname": "supplier_primary_address", "label": "Supplier Address", "fieldtype": "Data", "width": 200},
         {"fieldname": "mobile_no", "label": "Supplier Contact No.", "fieldtype": "Data", "width": 150},
         {"fieldname": "email_id", "label": "Supplier Email Address", "fieldtype": "Data", "width": 200},
@@ -103,7 +104,7 @@ def get_data(filters):
         supplier_details = frappe.get_value(
             "Supplier",
             sq.supplier,
-            ["supplier_primary_address", "mobile_no", "email_id"],
+            ["supplier_primary_contact", "supplier_primary_address", "mobile_no", "email_id"],
             as_dict=True
         )
 
@@ -111,6 +112,7 @@ def get_data(filters):
         supplier_map[sq.name] = {
             "supplier_quotation": sq.name,
             "supplier_name": sq.supplier,
+            "supplier_primary_contact": supplier_details.get("supplier_primary_contact"),
             "supplier_primary_address": supplier_details.get("supplier_primary_address"),
             "mobile_no": supplier_details.get("mobile_no"),
             "email_id": supplier_details.get("email_id"),
@@ -154,13 +156,14 @@ def get_data(filters):
             supplier_details = frappe.get_value(
                 "Supplier",
                 supplier,
-                ["supplier_primary_address", "mobile_no", "email_id"],
+                ["supplier_primary_contact", "supplier_primary_address", "mobile_no", "email_id"],
                 as_dict=True
             )
 
             supplier_map[f"missing_{supplier}"] = {
                 "supplier_quotation": "",  # No quotation
                 "supplier_name": supplier,
+                "supplier_primary_contact": supplier_details.get("supplier_primary_contact"),
                 "supplier_primary_address": supplier_details.get("supplier_primary_address"),
                 "mobile_no": supplier_details.get("mobile_no"),
                 "email_id": supplier_details.get("email_id"),

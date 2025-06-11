@@ -14,7 +14,7 @@ frappe.ui.form.on("ESD Supplier List", "supplier_name", function(frm, cdt, cdn) 
 
     // Check if supplier_name is not empty
     if (item.supplier_name) {
-        // Fetch email_id and mobile_no from Supplier doctype
+        // Fetch contact email_id and mobile_no from Supplier doctype
         frappe.call({
             method: 'frappe.client.get',
             args: {
@@ -25,7 +25,8 @@ frappe.ui.form.on("ESD Supplier List", "supplier_name", function(frm, cdt, cdn) 
                 if (response.message) {
                     let supplier = response.message;
 
-                    // Update email_id and mobile_no in the current child table row
+                    // Update contact, email_id and mobile_no in the current child table row
+                    frappe.model.set_value(cdt, cdn, 'contact', supplier.supplier_primary_contact || '');
                     frappe.model.set_value(cdt, cdn, 'email_id', supplier.email_id || '');
                     frappe.model.set_value(cdt, cdn, 'mobile_no', supplier.mobile_no || '');
 

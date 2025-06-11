@@ -7,11 +7,13 @@
  "engine": "InnoDB",
  "field_order": [
   "supplier_name",
+  "contact",
   "email_id",
   "mobile_no"
  ],
  "fields": [
   {
+   "columns": 2,
    "fieldname": "supplier_name",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -20,27 +22,39 @@
    "reqd": 1
   },
   {
+   "columns": 2,
    "fieldname": "email_id",
    "fieldtype": "Read Only",
    "in_list_view": 1,
    "label": "Email Address"
   },
   {
+   "columns": 2,
    "fieldname": "mobile_no",
    "fieldtype": "Read Only",
    "in_list_view": 1,
    "label": "Cell. No."
+  },
+  {
+   "columns": 2,
+   "fieldname": "contact",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Contact Person",
+   "options": "Contact"
   }
  ],
+ "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-10-08 08:37:06.091298",
+ "modified": "2025-06-11 15:16:37.854884",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "ESD Supplier List",
  "owner": "Administrator",
  "permissions": [],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []
