@@ -1,0 +1,43 @@
+{
+ "based_on": "",
+ "chart_name": "Incomplete Purchase Requisitions",
+ "chart_type": "Group By",
+ "color": "",
+ "creation": "2025-08-27 09:25:56.628988",
+ "currency": "ZAR",
+ "custom_options": "{\r\n  \"colors\": [\"#4CAF50\", \"#2196F3\", \"#FFC107\", \"#F44336\"]\r\n}",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "document_type": "Purchase Requisition",
+ "dynamic_filters_json": "[]",
+ "filters_json": "[[\"Purchase Requisition\",\"docstatus\",\"=\",\"0\",false]]",
+ "group_by_based_on": "location",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 0,
+ "is_standard": 1,
+ "modified": "2025-08-27 09:34:17.721889",
+ "modified_by": "Administrator",
+ "module": "Procurement",
+ "name": "Incomplete Purchase Requisitions",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "parent_document_type": "",
+ "roles": [
+  {
+   "role": "Procurement Manager"
+  },
+  {
+   "role": "Procurement Admin"
+  }
+ ],
+ "show_values_over_chart": 1,
+ "source": "",
+ "time_interval": "Monthly",
+ "timeseries": 0,
+ "timespan": "Last Quarter",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "value_based_on": "",
+ "y_axis": []
+}

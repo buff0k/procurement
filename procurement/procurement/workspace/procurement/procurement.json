@@ -1,6 +1,11 @@
 {
- "charts": [],
- "content": "[{\"id\":\"HJvWuElKEE\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Procurement</span>\",\"col\":12}},{\"id\":\"ksNWNnzsgN\",\"type\":\"card\",\"data\":{\"card_name\":\"Purchasing\",\"col\":4}},{\"id\":\"wzEUYZV0P3\",\"type\":\"card\",\"data\":{\"card_name\":\"ESD Procurement\",\"col\":4}},{\"id\":\"e5h0ObKIdm\",\"type\":\"card\",\"data\":{\"card_name\":\"Setup\",\"col\":4}}]",
+ "charts": [
+  {
+   "chart_name": "Pending Purchase Requisitions",
+   "label": "Pending Purchase Requisitions"
+  }
+ ],
+ "content": "[{\"id\":\"HJvWuElKEE\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Procurement</span>\",\"col\":12}},{\"id\":\"M7Puzj4A7d\",\"type\":\"chart\",\"data\":{\"chart_name\":\"Pending Purchase Requisitions\",\"col\":12}},{\"id\":\"ksNWNnzsgN\",\"type\":\"card\",\"data\":{\"card_name\":\"Purchasing\",\"col\":4}},{\"id\":\"wzEUYZV0P3\",\"type\":\"card\",\"data\":{\"card_name\":\"ESD Procurement\",\"col\":4}},{\"id\":\"e5h0ObKIdm\",\"type\":\"card\",\"data\":{\"card_name\":\"Setup\",\"col\":4}}]",
  "creation": "2024-07-27 20:02:09.921282",
  "custom_blocks": [],
  "docstatus": 0,
@@ -161,7 +166,7 @@
    "type": "Link"
   }
  ],
- "modified": "2025-05-07 08:27:36.778225",
+ "modified": "2025-08-27 09:44:34.199878",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Procurement",

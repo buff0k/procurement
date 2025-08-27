@@ -3,7 +3,7 @@
  "charts": [
   {
    "chart": "Pending Order Numbers",
-   "width": "Half"
+   "width": "Full"
   }
  ],
  "creation": "2024-08-20 12:35:09.025891",
@@ -13,7 +13,7 @@
  "idx": 0,
  "is_default": 0,
  "is_standard": 1,
- "modified": "2024-08-20 12:35:09.025891",
+ "modified": "2025-08-27 09:13:37.380511",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Procurement",

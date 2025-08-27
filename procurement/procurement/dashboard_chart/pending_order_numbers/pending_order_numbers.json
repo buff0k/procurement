@@ -14,7 +14,7 @@
  "is_public": 1,
  "is_standard": 1,
  "last_synced_on": "2024-08-20 12:37:37.002845",
- "modified": "2024-08-20 12:38:07.106844",
+ "modified": "2025-08-27 09:14:16.991456",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Pending Order Numbers",
@@ -24,13 +24,17 @@
  "roles": [
   {
    "role": "Procurement Admin"
+  },
+  {
+   "role": "Procurement Manager"
   }
  ],
+ "show_values_over_chart": 0,
  "source": "",
  "time_interval": "Weekly",
  "timeseries": 1,
  "timespan": "Last Month",
- "type": "Pie",
+ "type": "Bar",
  "use_report_chart": 0,
  "value_based_on": "",
  "y_axis": []

@@ -1,0 +1,13 @@
+{
+ "creation": "2025-08-27 09:37:12.660202",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart Source",
+ "idx": 0,
+ "modified": "2025-08-27 09:37:12.660202",
+ "modified_by": "Administrator",
+ "module": "Procurement",
+ "name": "Pending Purchase Requisitions",
+ "owner": "Administrator",
+ "source_name": "Pending Purchase Requisitions",
+ "timeseries": 0
+}
