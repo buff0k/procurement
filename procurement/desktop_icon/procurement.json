@@ -1,0 +1,36 @@
+{
+ "app": "procurement",
+ "bg_color": "blue",
+ "creation": "2026-02-02 09:11:18.013894",
+ "docstatus": 0,
+ "doctype": "Desktop Icon",
+ "hidden": 0,
+ "icon_type": "App",
+ "idx": 2,
+ "label": "Procurement",
+ "link": "/app/workspace/Procurement",
+ "link_to": "Procurement",
+ "link_type": "Workspace Sidebar",
+ "logo_url": "/assets/procurement/images/is-logo.svg",
+ "modified": "2026-03-11 12:07:44.102916",
+ "modified_by": "Administrator",
+ "name": "Procurement",
+ "owner": "Administrator",
+ "restrict_removal": 0,
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Procurement Manager"
+  },
+  {
+   "role": "Procurement Admin"
+  },
+  {
+   "role": "Procurement User"
+  }
+ ],
+ "sidebar": "Procurement",
+ "standard": 1
+}

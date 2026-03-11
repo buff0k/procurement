@@ -1,4 +1,5 @@
 {
+ "app": "procurement",
  "charts": [
   {
    "chart_name": "Pending Purchase Requisitions",
@@ -166,17 +167,31 @@
    "type": "Link"
   }
  ],
- "modified": "2025-08-27 09:44:34.199878",
+ "modified": "2026-03-11 11:56:17.656797",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Procurement",
  "number_cards": [],
  "owner": "Administrator",
- "parent_page": "",
+ "parent_page": "Procurement",
  "public": 1,
  "quick_lists": [],
- "roles": [],
+ "roles": [
+  {
+   "role": "System Manager"
+  },
+  {
+   "role": "Procurement Manager"
+  },
+  {
+   "role": "Procurement Admin"
+  },
+  {
+   "role": "Procurement User"
+  }
+ ],
  "sequence_id": 41.0,
  "shortcuts": [],
- "title": "Procurement"
+ "title": "Procurement",
+ "type": "Workspace"
 }

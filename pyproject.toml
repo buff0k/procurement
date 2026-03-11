@@ -3,10 +3,12 @@ name = "procurement"
 authors = [
     { name = "Isambane Mining (Pty) Ltd", email = "eben@isambane.co.za"}
 ]
+version = "16.0.0"
 description = "Isambane Mining Procurement Migration Suite"
-requires-python = ">=3.10"
+requires-python = ">=3.14"
 readme = "README.md"
-dynamic = ["version"]
+
+#dynamic = ["version"]
 dependencies = [
     # "frappe~=15.0.0" # Installed and managed by bench.
 ]
