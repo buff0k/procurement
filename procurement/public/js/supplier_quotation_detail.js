@@ -159,7 +159,7 @@ frappe.ready(() => {
 
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("is_private", "0");
+        formData.append("is_private", "1");
         formData.append("folder", "Home");
         formData.append("doctype", "Supplier Quotation");
         formData.append("docname", quotationName);
