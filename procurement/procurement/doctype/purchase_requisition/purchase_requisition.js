@@ -22,17 +22,29 @@ frappe.ui.form.on('Purchase Requisition', {
         }
     },
 
+
+
+
+
+
+
+
+
+
     refresh: function(frm) {
         frm.fields_dict['item_list'].grid.wrapper.on('change', 'input[data-fieldname="qty"], input[data-fieldname="unit_price"]', function() {
             calculate_total_cost(frm);
             calculate_totals(frm);
         });
+
+        apply_item_account_filter(frm);
+        apply_asset_location_filter(frm);
+        apply_parts_requisition_filter(frm);
+
         frm.trigger('update_employee_names');
-        // Check if the user has the "Procurement Admin" role
+
         if (frappe.user.has_role('Procurement Admin')) {
-            // Add a custom button to the form
             frm.add_custom_button(__('Generate Order Number'), function() {
-                // Call the server-side method using the full module path
                 frappe.call({
                     method: "procurement.procurement.doctype.purchase_requisition.purchase_requisition.generate_order_number",
                     args: {
@@ -42,13 +54,46 @@ frappe.ui.form.on('Purchase Requisition', {
                         if (r.exc) {
                             frappe.msgprint(__("Error: {0}").format(r.exc));
                         } else {
-                            frm.refresh();
+                            frappe.msgprint(__("Order Number generated successfully."));
+                            frm.reload_doc();
                         }
                     }
                 });
             });
         }
+
+        if (frm.doc.official_company_order_no && !frm.is_new()) {
+            frm.add_custom_button(__('Generate Purchase Order'), function() {
+                frappe.call({
+                    method: "procurement.procurement.doctype.purchase_requisition.purchase_requisition.make_purchase_order",
+                    args: {
+                        source_name: frm.doc.name
+                    },
+                    callback: function(r) {
+                        if (r.message) {
+                            frappe.msgprint(__("Purchase Order created/opened: {0}").format(r.message));
+                            frappe.set_route("Form", "Purchase Order", r.message);
+                        }
+                    },
+                    error: function(r) {
+                        let msg = r.message || r._server_messages || r.exc || "Purchase Order could not be created.";
+                        frappe.msgprint({
+                            title: __("Purchase Order Error"),
+                            message: msg,
+                            indicator: "red"
+                        });
+                    }
+                });
+            });
+        }
     },
+
+
+
+
+
+
+
 
     validate: function(frm) {
         calculate_totals(frm);
@@ -109,13 +154,78 @@ frappe.ui.form.on('Purchase Requisition', {
         }
     },
 
+
+
+
+    asset: function (frm) {
+        frm.set_value("parts_requisition", null);
+        apply_parts_requisition_filter(frm);
+
+        if (!frm.doc.asset) {
+            frm.set_value("machine_hours", null);
+            return;
+        }
+
+        frappe.call({
+            method: "procurement.procurement.doctype.purchase_requisition.purchase_requisition.get_latest_machine_hours_for_asset",
+            args: {
+                asset: frm.doc.asset
+            },
+            callback: function (r) {
+                if (r.message !== null && r.message !== undefined) {
+                    frm.set_value("machine_hours", r.message);
+                }
+            }
+        });
+    },
+
+    account: function (frm) {
+        apply_item_account_filter(frm);
+    },
+
+    parts_requisition: function (frm) {
+        if (!frm.doc.parts_requisition) {
+            return;
+        }
+
+        frappe.call({
+            method: "procurement.procurement.doctype.purchase_requisition.purchase_requisition.get_parts_requisition_items",
+            args: {
+                parts_requisition: frm.doc.parts_requisition
+            },
+            callback: function (r) {
+                frm.clear_table("item_list");
+
+                (r.message || []).forEach(function (part) {
+                    let row = frm.add_child("item_list");
+
+                    row.qty = part.qty;
+                    row.item = part.item_code;
+                    row.item_group = part.item_group;
+                    row.description_and_part_no = [part.part_name, part.part_no].filter(Boolean).join(" - ");
+                    row.unit_price = 0;
+                    row.total_cost = 0;
+                });
+
+                frm.refresh_field("item_list");
+                calculate_totals(frm);
+            }
+        });
+    },
+
+
     site_code: function (frm) {
+        frm.set_value("parts_requisition", null);
+        apply_parts_requisition_filter(frm);
+
         if (frm.doc.site_code) {
             // Fetch the location from the linked Site Code document
             frappe.db.get_value('Site Code', frm.doc.site_code, 'location', (r) => {
                 if (r && r.location) {
                     // Set the location field in the Purchase Requisition document
                     frm.set_value('location', r.location);
+                    frm.set_value('asset', null);
+                    apply_asset_location_filter(frm);
                 }
             });
         
@@ -184,4 +294,44 @@ function calculate_totals(frm) {
     frm.set_value('vat', vat);
 
     frm.set_value('total', subtotal + vat);
+}
+
+function apply_item_account_filter(frm) {
+    frm.set_query("item", "item_list", function () {
+        if (!frm.doc.account) {
+            return {};
+        }
+
+        return {
+            query: "procurement.procurement.doctype.purchase_requisition.purchase_requisition.get_items_by_expense_account",
+            filters: {
+                expense_account: frm.doc.account
+            }
+        };
+    });
+}
+
+
+function apply_asset_location_filter(frm) {
+    frm.set_query("asset", function () {
+        return {
+            filters: {
+                docstatus: 1,
+                location: frm.doc.location || ""
+            }
+        };
+    });
+}
+
+function apply_parts_requisition_filter(frm) {
+    frm.set_query("parts_requisition", function () {
+        return {
+            query: "procurement.procurement.doctype.purchase_requisition.purchase_requisition.get_available_parts_requisitions",
+            filters: {
+                site_code: frm.doc.site_code,
+                asset: frm.doc.asset,
+                current_purchase_requisition: frm.doc.name
+            }
+        };
+    });
 }

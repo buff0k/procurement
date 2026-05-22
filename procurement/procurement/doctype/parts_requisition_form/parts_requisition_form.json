@@ -1,0 +1,256 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{plant_no}-{site}-{######}",
+ "creation": "2026-04-17 00:00:00",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "date111",
+  "requested_by_employee_number",
+  "mechanic_name_and_surname",
+  "attach_hard_copy1",
+  "mechanic_signature",
+  "column_break_2",
+  "site",
+  "plant_no",
+  "asset_category",
+  "plant_make",
+  "model",
+  "vin_no",
+  "smr",
+  "items_section",
+  "items",
+  "section_break_bize",
+  "date",
+  "forman_supervisor_employee_number",
+  "formansupervisor_name_and_surname",
+  "forman_supervisor_sign"
+ ],
+ "fields": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "date111",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "requested_by_employee_number",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Mechanic Employee Number",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "requested_by_employee_number.employee_name",
+   "fieldname": "mechanic_name_and_surname",
+   "fieldtype": "Data",
+   "label": "Mechanic Name and Surname",
+   "read_only": 1
+  },
+  {
+   "fieldname": "attach_hard_copy1",
+   "fieldtype": "Attach Image",
+   "label": "Attach Hard Copy"
+  },
+  {
+   "fieldname": "mechanic_signature",
+   "fieldtype": "Signature",
+   "label": "Mechanic Signature"
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "site",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Site Code",
+   "options": "Site Code"
+  },
+  {
+   "fieldname": "plant_no",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Plant No",
+   "options": "Asset",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "plant_no.asset_category",
+   "fieldname": "asset_category",
+   "fieldtype": "Link",
+   "label": "Asset Category",
+   "options": "Asset Category",
+   "read_only": 1
+  },
+  {
+   "fieldname": "plant_make",
+   "fieldtype": "Link",
+   "label": "Plant Make",
+   "options": "Brand"
+  },
+  {
+   "fetch_from": "plant_no.item_code",
+   "fieldname": "model",
+   "fieldtype": "Read Only",
+   "label": "Model",
+   "read_only": 1
+  },
+  {
+   "fieldname": "vin_no",
+   "fieldtype": "Data",
+   "label": "VIN No"
+  },
+  {
+   "fieldname": "smr",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "SMR",
+   "precision": "0",
+   "reqd": 1
+  },
+  {
+   "fieldname": "items_section",
+   "fieldtype": "Section Break",
+   "label": "Items"
+  },
+  {
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Parts Requisition Item",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_bize",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Datetime",
+   "label": "Date"
+  },
+  {
+   "fieldname": "forman_supervisor_employee_number",
+   "fieldtype": "Link",
+   "label": "Forman/Supervisor Employee Number",
+   "options": "Employee"
+  },
+  {
+   "fetch_from": "forman_supervisor_employee_number.employee_name",
+   "fieldname": "formansupervisor_name_and_surname",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Forman/Supervisor Name and Surname",
+   "options": "Employee",
+   "read_only": 1
+  },
+  {
+   "fieldname": "forman_supervisor_sign",
+   "fieldtype": "Signature",
+   "label": "Forman/Supervisor Signature"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-05-22 07:16:28.535266",
+ "modified_by": "Administrator",
+ "module": "Procurement",
+ "name": "Parts Requisition Form",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Engineering Manager",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Engineering User",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Mechanic",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Procurement Manager",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Procurement User",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "plant_no",
+ "track_changes": 1
+}

@@ -22,20 +22,20 @@
   "req_name",
   "del_name",
   "auth_name",
-  "section_break_xtex",
-  "plant_make",
-  "asset",
-  "column_break_nzcl",
-  "date",
-  "machine_hours",
-  "component",
   "section_break_afgm",
   "supplier",
   "official_company_order_no",
-  "column_break_opkx",
   "account",
-  "site_code",
   "buyer",
+  "column_break_opkx",
+  "site_code",
+  "asset",
+  "plant_make",
+  "parts_requisition",
+  "section_break_xtex",
+  "date",
+  "machine_hours",
+  "component",
   "section_break_qbca",
   "description_of_work",
   "item_list",
@@ -98,10 +98,6 @@
    "fieldtype": "Link",
    "label": "Plant No",
    "options": "Asset"
-  },
-  {
-   "fieldname": "column_break_nzcl",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "date",
@@ -179,7 +175,8 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Official Company Order No",
-   "permlevel": 1
+   "permlevel": 1,
+   "read_only": 1
   },
   {
    "fieldname": "authorized_by",
@@ -252,7 +249,7 @@
   {
    "fieldname": "account",
    "fieldtype": "Link",
-   "label": "Code",
+   "label": "Account Code",
    "link_filters": "[[\"Account\",\"company\",\"=\",\"eval: doc.company\"]]",
    "options": "Account"
   },
@@ -308,16 +305,22 @@
   {
    "fieldname": "section_break_qdta",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "parts_requisition",
+   "fieldtype": "Link",
+   "label": "Parts Requisition to pick",
+   "options": "Parts Requisition Form"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-02-24 15:16:59.579178",
+ "modified": "2026-05-19 14:32:48.683765",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition",
- "naming_rule": "Expression",
+ "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
@@ -376,6 +379,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

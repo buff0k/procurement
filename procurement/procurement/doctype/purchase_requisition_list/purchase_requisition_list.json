@@ -6,11 +6,13 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "qty",
-  "item",
-  "description_and_part_no",
   "unit_price",
-  "total_cost"
+  "total_cost",
+  "item_group",
+  "item",
+  "part_no",
+  "qty",
+  "part_name"
  ],
  "fields": [
   {
@@ -24,18 +26,6 @@
    "in_standard_filter": 1,
    "label": "Qty",
    "non_negative": 1,
-   "reqd": 1,
-   "search_index": 1
-  },
-  {
-   "columns": 3,
-   "fieldname": "description_and_part_no",
-   "fieldtype": "Data",
-   "in_filter": 1,
-   "in_list_view": 1,
-   "in_preview": 1,
-   "in_standard_filter": 1,
-   "label": "Description and Part No.",
    "reqd": 1,
    "search_index": 1
   },
@@ -75,18 +65,49 @@
    "in_standard_filter": 1,
    "label": "Item",
    "options": "Item",
+   "reqd": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "item_group",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Item Group",
+   "options": "Item Group",
+   "reqd": 1
+  },
+  {
+   "columns": 3,
+   "fieldname": "part_no",
+   "fieldtype": "Data",
+   "in_filter": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Part No.",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "description": "If the Item is \"Other\" or not to be found, fill this field.",
+   "fieldname": "part_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Part Name"
   }
  ],
+ "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-02-19 20:11:17.171399",
+ "modified": "2026-05-19 14:41:13.498672",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Purchase Requisition List",
  "owner": "Administrator",
  "permissions": [],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []
