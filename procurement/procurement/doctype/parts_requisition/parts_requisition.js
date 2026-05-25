@@ -1,6 +1,3 @@
-// Copyright (c) 2026, Isambane Mining (Pty) Ltd and contributors
-// For license information, please see license.txt
-
 frappe.ui.form.on("Parts Requisition Item", {
 	item_group(frm, cdt, cdn) {
 		const row = locals[cdt][cdn];
@@ -12,7 +9,7 @@ frappe.ui.form.on("Parts Requisition Item", {
 	item_code(frm, cdt, cdn) {
 		const row = locals[cdt][cdn];
 
-		if (!row.item_group && row.item_code) {
+		if (!row.item_group) {
 			row.item_code = "";
 			frm.refresh_field("items");
 			frappe.msgprint(__("Select Item Group before Item Code."));
@@ -20,9 +17,10 @@ frappe.ui.form.on("Parts Requisition Item", {
 	}
 });
 
+
 frappe.ui.form.on("Parts Requisition Form", {
 	refresh(frm) {
-		set_parts_requisition_filters(frm);
+		set_account_filter(frm);
 
 		if (frm.doc.plant_no) {
 			load_asset_details(frm);
@@ -30,19 +28,41 @@ frappe.ui.form.on("Parts Requisition Form", {
 	},
 
 	onload(frm) {
-		set_parts_requisition_filters(frm);
+		set_account_filter(frm);
 	},
 
 	company(frm) {
-		clear_asset_fields(frm);
-		clear_item_fields(frm);
-		set_parts_requisition_filters(frm);
+		frm.set_value("plant_no", "");
+		frm.set_value("asset_category", "");
+		frm.set_value("plant_make", "");
+		frm.set_value("model", "");
+		frm.set_value("vin_no", "");
+
+		(frm.doc.items || []).forEach(row => {
+			row.item_group = "";
+			row.item_code = "";
+		});
+
+		frm.refresh_field("items");
+
+		set_account_filter(frm);
 	},
 
 	site(frm) {
-		clear_asset_fields(frm);
-		clear_item_fields(frm);
-		set_parts_requisition_filters(frm);
+		frm.set_value("plant_no", "");
+		frm.set_value("asset_category", "");
+		frm.set_value("plant_make", "");
+		frm.set_value("model", "");
+		frm.set_value("vin_no", "");
+
+		(frm.doc.items || []).forEach(row => {
+			row.item_group = "";
+			row.item_code = "";
+		});
+
+		frm.refresh_field("items");
+
+		set_account_filter(frm);
 	},
 
 	plant_no(frm) {
@@ -52,7 +72,7 @@ frappe.ui.form.on("Parts Requisition Form", {
 
 		if (!frm.doc.company || !frm.doc.site) {
 			frm.set_value("plant_no", "");
-			frappe.msgprint(__("Select Company and Site Code before Plant No."));
+			frappe.msgprint(__("Select Company and Site before Plant No."));
 			return;
 		}
 
@@ -60,11 +80,17 @@ frappe.ui.form.on("Parts Requisition Form", {
 	},
 
 	asset_category(frm) {
-		clear_item_fields(frm);
+		(frm.doc.items || []).forEach(row => {
+			row.item_group = "";
+			row.item_code = "";
+		});
+
+		frm.refresh_field("items");
 	}
 });
 
-function set_parts_requisition_filters(frm) {
+
+function set_account_filter(frm) {
 	frm.set_query("plant_no", function() {
 		if (!frm.doc.company || !frm.doc.site) {
 			return {
@@ -75,7 +101,7 @@ function set_parts_requisition_filters(frm) {
 		}
 
 		return {
-			query: "procurement.procurement.doctype.parts_requisition_form.parts_requisition_form.get_assets_by_site_code",
+			query: "engineering.engineering.doctype.parts_requisition_form.parts_requisition_form.get_assets_by_site_code",
 			filters: {
 				company: frm.doc.company,
 				site: frm.doc.site
@@ -93,7 +119,7 @@ function set_parts_requisition_filters(frm) {
 		}
 
 		return {
-			query: "procurement.procurement.doctype.parts_requisition_form.parts_requisition_form.get_item_groups_by_asset_category",
+			query: "engineering.engineering.doctype.parts_requisition_form.parts_requisition_form.get_item_groups_by_asset_category",
 			filters: {
 				asset_category: frm.doc.asset_category
 			}
@@ -120,21 +146,6 @@ function set_parts_requisition_filters(frm) {
 	});
 }
 
-function clear_asset_fields(frm) {
-	frm.set_value("plant_no", "");
-	frm.set_value("asset_category", "");
-	frm.set_value("model", "");
-	frm.set_value("vin_no", "");
-}
-
-function clear_item_fields(frm) {
-	(frm.doc.items || []).forEach(row => {
-		row.item_group = "";
-		row.item_code = "";
-	});
-
-	frm.refresh_field("items");
-}
 
 function split_item_code(item_code) {
 	if (!item_code) {
@@ -163,9 +174,13 @@ function split_item_code(item_code) {
 	};
 }
 
+
 function load_asset_details(frm) {
 	if (!frm.doc.plant_no) {
-		clear_asset_fields(frm);
+		frm.set_value("asset_category", "");
+		frm.set_value("plant_make", "");
+		frm.set_value("model", "");
+		frm.set_value("vin_no", "");
 		return;
 	}
 
@@ -185,6 +200,7 @@ function load_asset_details(frm) {
 				"";
 
 			frm.set_value("asset_category", doc.asset_category || "");
+			frm.set_value("plant_make", split_values.plant_make);
 			frm.set_value("model", split_values.model);
 
 			if (!frm.doc.vin_no) {
@@ -193,7 +209,12 @@ function load_asset_details(frm) {
 		})
 		.catch(err => {
 			console.error("Failed to load Asset details", err);
-			clear_asset_fields(frm);
-			frappe.msgprint(__("Could not load Asset details."));
+
+			frm.set_value("asset_category", "");
+			frm.set_value("plant_make", "");
+			frm.set_value("model", "");
+			frm.set_value("vin_no", "");
+
+			frappe.msgprint(__("Could not load Plant Make / Model from Asset."));
 		});
 }

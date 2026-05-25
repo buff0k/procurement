@@ -1,4 +1,4 @@
-# Copyright (c) 2026, Isambane Mining (Pty) Ltd and contributors
+# Copyright (c) 2026, BuFf0k and contributors
 # For license information, please see license.txt
 
 import frappe
@@ -57,6 +57,7 @@ def get_asset_machine_details(asset_name):
 	}
 
 
+
 @frappe.whitelist()
 @frappe.validate_and_sanitize_search_inputs
 def get_assets_by_site_code(doctype, txt, searchfield, start, page_len, filters):
@@ -93,6 +94,8 @@ def get_assets_by_site_code(doctype, txt, searchfield, start, page_len, filters)
 		"start": start,
 		"page_len": page_len
 	})
+
+
 
 
 @frappe.whitelist()
@@ -160,3 +163,6 @@ def get_item_groups_by_asset_category(doctype, txt, searchfield, start, page_len
 		"start": start,
 		"page_len": page_len
 	})
+
+
+	
