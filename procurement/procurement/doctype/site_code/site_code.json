@@ -59,7 +59,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-05-26 14:32:08.953554",
+ "modified": "2026-05-27 14:19:44.021498",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Site Code",
@@ -118,39 +118,6 @@
    "role": "Procurement User",
    "select": 1,
    "share": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Engineering User",
-   "select": 1,
-   "share": 1,
-   "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Engineering Manager",
-   "select": 1,
-   "share": 1,
-   "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Mechanic",
-   "select": 1,
-   "share": 1,
-   "write": 1
   }
  ],
  "row_format": "Dynamic",
