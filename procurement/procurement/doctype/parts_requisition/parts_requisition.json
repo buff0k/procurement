@@ -167,7 +167,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-05-25 13:17:50.771604",
+ "modified": "2026-05-27 14:35:08.051559",
  "modified_by": "Administrator",
  "module": "Procurement",
  "name": "Parts Requisition",
@@ -194,6 +194,7 @@
    "read": 1,
    "report": 1,
    "role": "Mechanic",
+   "select": 1,
    "share": 1,
    "write": 1
   },
