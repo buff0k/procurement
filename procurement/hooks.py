@@ -7,12 +7,12 @@ app_license = "mit"
 app_version = "16.0.0"
 required_apps = ["erpnext"]
 source_link = "http://github.com/buff0k/procurement"
-app_logo_url = "/assets/procurement/images/is-logo.svg"
+app_logo_url = "/assets/procurement/images/is-logo.png"
 app_home = "/desk/procurement"
 add_to_apps_screen = [
 	{
 		"name": app_name,
-		"logo": "/assets/procurement/images/is-logo.svg",
+		"logo": "/assets/procurement/images/is-logo.png",
 		"title": app_title,
 		"route": app_home,
 		"has_permission": "procurement.procurement.utils.check_app_permission",
